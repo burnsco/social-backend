@@ -1,0 +1,9 @@
+dist
+/dist/
+temp
+*.env
+.env
+.env.production
+node_modules
+# you should add that
+# .env

@@ -1,0 +1,104 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Typescript-Express-Apollo Backend for Reddit Clone",
+  "main": "index.js",
+  "private": true,
+  "author": "Corey Burns",
+  "keywords": [
+    "typescript",
+    "apollo"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "gen-env-types": "gen-env-types .env -o src/env.d.ts -e .",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "dev": "nodemon dist/index.js",
+    "create-migration": "mikro-orm migration:create",
+    "migration-up": "mikro-orm migration:up",
+    "migration-down": "mikro-orm migration:down",
+    "migration-list": "mikro-orm migration:list",
+    "migration-pending": "mikro-orm migration:pending",
+    "debug": "mikro-orm debug",
+    "type-check": "tsc --pretty --noEmit",
+    "format": "prettier --write \"**/*.{js,ts,tsx}\"",
+    "lint": "eslint . --ext ts --ext tsx --ext js",
+    "test": "jest --forceExit --detectOpenHandles"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn run type-check"
+    }
+  },
+  "lint-staged": {
+    "*.@(ts|tsx)": [
+      "yarn lint",
+      "yarn format"
+    ]
+  },
+  "devDependencies": {
+    "@types/connect-redis": "^0.0.16",
+    "@types/dotenv-safe": "^8.1.1",
+    "@types/express": "^4.17.11",
+    "@types/express-session": "^1.17.3",
+    "@types/faker": "^5.5.1",
+    "@types/ioredis": "^4.22.3",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.37",
+    "@types/nodemailer": "^6.4.1",
+    "@types/uuid": "^8.3.0",
+    "@types/yup": "^0.29.11",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
+    "eslint": "^7.24.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.0",
+    "faker": "^5.5.3",
+    "gen-env-types": "^1.3.0",
+    "husky": "^6.0.0",
+    "jest": "^26.6.3",
+    "jest-watch-typeahead": "^0.6.2",
+    "lint-staged": "^10.5.4",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.5.4",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "@mikro-orm/cli": "^4.5.3",
+    "@mikro-orm/core": "^4.5.3",
+    "@mikro-orm/migrations": "^4.5.3",
+    "@mikro-orm/postgresql": "^4.5.3",
+    "apollo-server-express": "^2.22.2",
+    "argon2": "^0.27.2",
+    "chalk": "^4.1.0",
+    "class-validator": "^0.13.1",
+    "connect-redis": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv-safe": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "graphql": "^15.5.0",
+    "graphql-custom-types": "^1.6.0",
+    "graphql-redis-subscriptions": "^2.3.1",
+    "ioredis": "^4.26.0",
+    "moment": "^2.29.0",
+    "nodemailer": "^6.5.0",
+    "pg": "^8.5.1",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1",
+    "winston": "^3.3.3",
+    "yup": "^0.32.9"
+  },
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./src/mikro-orm.config.ts",
+      "./dist/mikro-orm.config.js"
+    ]
+  }
+}
