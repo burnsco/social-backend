@@ -1,3 +1,4 @@
+import { LoadStrategy } from "@mikro-orm/core"
 import {
   Arg,
   Args,
@@ -20,7 +21,7 @@ import { ContextType } from "../../types"
 
 @Resolver(() => PrivateMessage)
 export default class PrivateMessageMutationResolver {
-  @Mutation(() => PrivateMessage)
+  @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
   async sendPrivateMessage(
     @Arg("data") { body, userId }: PrivateMessageInput,
@@ -28,13 +29,16 @@ export default class PrivateMessageMutationResolver {
     notifyAboutNewPrivateMessage: Publisher<PrivateMessage>,
     @Ctx()
     { em, req }: ContextType
-  ): Promise<PrivateMessage | null> {
-    const user = await em.findOne(User, { id: req.session.userId }, [
-      "privateMessages"
-    ])
-    const receipent = await em.findOne(User, { id: userId }, [
-      "privateMessages"
-    ])
+  ): Promise<boolean> {
+    const user = await em.findOne(User, { id: req.session.userId },
+      {
+        populate: ["privateMessages"],
+        strategy: LoadStrategy.JOINED
+      })
+    const receipent = await em.findOne(User, { id: userId },{
+       populate: ["privateMessages"],
+        strategy: LoadStrategy.JOINED
+    })
 
     if (user && receipent && req.session.userId) {
       const newmessage = em.create(PrivateMessage, {
@@ -52,9 +56,10 @@ export default class PrivateMessageMutationResolver {
 
       await em.flush()
       await notifyAboutNewPrivateMessage(newmessage)
-      return newmessage
+      
+      return true
     }
-    return null
+    return false
   }
 
   // *** SUBSCRIPTION *** \\
@@ -62,10 +67,6 @@ export default class PrivateMessageMutationResolver {
   @Subscription(() => PrivateMessage, {
     topics: Topic.NewPrivateMessage,
     filter: ({ payload, args }) => {
-      console.log("payload")
-      console.log(payload)
-      console.log("args")
-      console.log(args)
       return payload.sentTo === args.userId
     }
   })

@@ -1,11 +1,14 @@
-FROM node:14
+# base image contains the dependencies and no application code
+FROM node:16-alpine as base  
+
+# prod image inherits from base and adds application code
+FROM base as prod 
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
-COPY yarn.lock ./
+COPY package*.json yarn.lock ./
 
-RUN yarn
+RUN yarn install --production
 
 COPY . .
 COPY .env.production .env

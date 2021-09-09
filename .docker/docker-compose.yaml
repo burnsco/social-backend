@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+
+  web:
+    build:
+      context: .
+      target: development
+    depends_on:
+      - db
+    command: ["./wait-for-it.sh", "db:5432", "--", "node", "dist/index.js"]
+
+  redis:
+    image: redis
+    depends_on: 
+      - db
+
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      
+volumes:
+  db-data:
+secrets:
+  db-password:
+    file: db/password.txt
