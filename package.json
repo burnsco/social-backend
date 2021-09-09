@@ -26,6 +26,8 @@
     "create-migration": "mikro-orm migration:create",
     "migration-up": "mikro-orm migration:up",
     "migration-down": "mikro-orm migration:down",
+    "pre-commit": "lint-staged",
+    "pre-push": "yarn run type-check",
     "migration-list": "mikro-orm migration:list",
     "migration-pending": "mikro-orm migration:pending",
     "debug-mikro": "mikro-orm debug",
