@@ -7,7 +7,12 @@
   "author": "Corey Burns",
   "keywords": [
     "typescript",
-    "apollo"
+    "apollo",
+    "backend",
+    "social",
+    "redis",
+    "node",
+    "postgres"
   ],
   "license": "MIT",
   "scripts": {
@@ -27,7 +32,8 @@
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "lint": "eslint . --ext ts --ext tsx --ext js",
-    "test": "jest --forceExit --detectOpenHandles"
+    "test": "jest --forceExit --detectOpenHandles",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
