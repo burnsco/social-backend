@@ -30,15 +30,22 @@ export default class PrivateMessageMutationResolver {
     @Ctx()
     { em, req }: ContextType
   ): Promise<boolean> {
-    const user = await em.findOne(User, { id: req.session.userId },
+    const user = await em.findOne(
+      User,
+      { id: req.session.userId },
       {
         populate: ["privateMessages"],
         strategy: LoadStrategy.JOINED
-      })
-    const receipent = await em.findOne(User, { id: userId },{
-       populate: ["privateMessages"],
+      }
+    )
+    const receipent = await em.findOne(
+      User,
+      { id: userId },
+      {
+        populate: ["privateMessages"],
         strategy: LoadStrategy.JOINED
-    })
+      }
+    )
 
     if (user && receipent && req.session.userId) {
       const newmessage = em.create(PrivateMessage, {
@@ -56,7 +63,7 @@ export default class PrivateMessageMutationResolver {
 
       await em.flush()
       await notifyAboutNewPrivateMessage(newmessage)
-      
+
       return true
     }
     return false
