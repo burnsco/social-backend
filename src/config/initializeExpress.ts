@@ -30,7 +30,7 @@ export default function initializeExpress() {
         httpOnly: true,
         sameSite: "lax",
         secure: __prod__,
-        domain: __prod__ ? "reddit-clone.com" || ".vercel.app" : undefined
+        domain: __prod__ ? "*.coreyburns.dev" || "localhost" : undefined
       },
       saveUninitialized: false,
       secret: process.env.SESSION_SECRET,
