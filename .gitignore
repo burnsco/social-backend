@@ -4,6 +4,7 @@ temp
 *.env
 .env
 .env.production
+redis_password.txt
 node_modules
 # you should add that
 # .env
