@@ -17,7 +17,10 @@ export async function testConnection() {
       path: path.join(__dirname, "../migrations"),
       pattern: /^[\w-]+\d+\.[tj]s$/
     },
-    clientUrl: "postgres://postgres:postgres@172.22.0.2:5432/reddit-clone-db",
+    dbName: "social-testing",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     entities: [Category, User, Post, Comment, Vote, Message, PrivateMessage],
     baseDir: BASE_DIR,
     type: "postgresql",
