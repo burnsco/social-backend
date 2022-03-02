@@ -69,7 +69,7 @@ export default class UserMutationResolver {
     const user = em.create(User, {
       email,
       username,
-      online: false,
+      online: true,
       password: await argon2.hash(password)
     })
 

@@ -28,7 +28,7 @@ export default function initializeExpress() {
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: "none",
         secure: __prod__,
         domain: __prod__ ? "*.coreyburns.dev" || "localhost" : undefined
       },
