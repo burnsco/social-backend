@@ -1,11 +1,10 @@
 import { MaxLength, MinLength } from "class-validator"
 import { Field, InputType } from "type-graphql"
-import { Category } from "../entities"
 
 @InputType()
-export default class CategoryInput implements Partial<Category> {
+export default class CategoryInput {
   @Field(() => String)
-  @MinLength(2)
-  @MaxLength(20)
+  @MinLength(3)
+  @MaxLength(15)
   name: string
 }

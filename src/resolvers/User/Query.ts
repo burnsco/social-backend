@@ -55,11 +55,7 @@ export default class UserQueryResolver {
   @Query(() => [PrivateMessage], { nullable: true })
   async myPrivateMessages(
     @Ctx() { req, em }: ContextType
-  ): Promise<
-    | (Collection<PrivateMessage, unknown> &
-        LoadedCollection<PrivateMessage, PrivateMessage>)
-    | null
-  > {
+  ): Promise<PrivateMessage[] | null> {
     if (req && req.session.userId) {
       const user = await em.findOne(
         User,
@@ -71,7 +67,7 @@ export default class UserQueryResolver {
       )
       if (user && user.privateMessages) {
         const privateMessages = user.privateMessages
-        return privateMessages
+        return { privateMessages }
       }
     }
     return null

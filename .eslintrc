@@ -11,9 +11,7 @@
     "plugin:import/warnings",
     "plugin:import/typescript",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "plugin:prettier/recommended"
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
