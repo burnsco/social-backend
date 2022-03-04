@@ -3,35 +3,35 @@ import {
   Entity,
   ManyToOne,
   PrimaryKey,
-  Property
-} from "@mikro-orm/core"
-import { Field, ID, ObjectType } from "type-graphql"
-import { Category, User } from "."
+  Property,
+} from '@mikro-orm/core';
+import { Field, ID, ObjectType } from 'type-graphql';
+import { Category, User } from '.';
 
 @Entity()
 @ObjectType()
 export default class Message {
   @Field(() => ID)
   @PrimaryKey()
-  readonly id: number
+  readonly id: number;
 
   @Field(() => String)
   @Property()
-  createdAt: string = new Date().toISOString()
+  createdAt: string = new Date().toISOString();
 
   @Field()
   @Property()
-  content!: string
+  content!: string;
 
   @Field(() => User)
   @ManyToOne(() => User, {
-    onDelete: "cascade"
+    onDelete: 'cascade',
   })
-  sentBy!: User
+  sentBy!: User;
 
   @Field(() => Category)
   @ManyToOne(() => Category, {
-    cascade: [Cascade.ALL]
+    cascade: [Cascade.ALL],
   })
-  category!: Category
+  category!: Category;
 }

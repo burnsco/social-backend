@@ -1,10 +1,10 @@
-import { Field, ID, ObjectType } from "type-graphql"
+import { Field, ID, ObjectType } from 'type-graphql';
 
 @ObjectType()
 export default class UserJoinedChatResponse {
   @Field(() => String)
-  userName: String
+  userName: string;
 
   @Field(() => ID)
-  category: number
+  category: number;
 }

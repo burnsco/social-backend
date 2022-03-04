@@ -1,9 +1,10 @@
-import { Field, ObjectType } from "type-graphql"
+import { Field, ObjectType } from 'type-graphql';
 
 @ObjectType()
 export default class UserLogoutMutationResponse {
   @Field(() => String, { nullable: true })
-  message?: string
+  message?: string;
+
   @Field(() => String, { nullable: true })
-  success?: boolean
+  success?: boolean;
 }

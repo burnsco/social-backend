@@ -6,5 +6,22 @@ temp
 .env.production
 redis_password.txt
 node_modules
+**/node_modules
+**/dist
+/data
+/coverage
+/temp
+/tests/generated-entities
+/.idea
+/.vscode
+/yarn-error.log
+/.coveralls.yml
+!.gitkeep
+/mikro_orm_test.db
+*.tsbuildinfo
+.DS_Store
+COVERAGE_RESULT
+.npmrc
+
 # you should add that
 # .env

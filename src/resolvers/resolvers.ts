@@ -11,8 +11,8 @@ import {
   PrivateMessageQueryResolver,
   UserMutationResolver,
   UserQueryResolver,
-  VoteQueryResolver
-} from "."
+  VoteQueryResolver,
+} from '.';
 
 export const resolversArray = [
   PostQueryResolver,
@@ -27,5 +27,5 @@ export const resolversArray = [
   CategoryMutationResolver,
   CategoryQueryResolver,
   CommentMutationResolver,
-  CommentQueryResolver
-] as const
+  CommentQueryResolver,
+] as const;

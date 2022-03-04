@@ -1,9 +1,9 @@
-import { registerEnumType } from "type-graphql"
+import { registerEnumType } from 'type-graphql';
 
 export enum OrderBy {
-  ASC = "asc",
-  DESC = "desc"
+  ASC = 'asc',
+  DESC = 'desc',
 }
 registerEnumType(OrderBy, {
-  name: "OrderBy"
-})
+  name: 'OrderBy',
+});

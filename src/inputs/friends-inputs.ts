@@ -1,7 +1,7 @@
-import { Field, InputType } from "type-graphql"
+import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export default class FriendsInput {
   @Field(() => String, { nullable: true })
-  username?: string
+  username?: string;
 }

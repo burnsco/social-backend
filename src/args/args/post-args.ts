@@ -1,25 +1,25 @@
-import { Max, Min } from "class-validator"
-import { ArgsType, Field, Int } from "type-graphql"
+import { Max, Min } from 'class-validator';
+import { ArgsType, Field, Int } from 'type-graphql';
 
 @ArgsType()
 export default class PostArgs {
   @Field(() => Int, { nullable: true })
-  first?: number
+  first?: number;
 
   @Field(() => Int, { nullable: true })
-  postId?: number
+  postId?: number;
 
   @Field(() => String, { nullable: true })
-  orderBy?: string
+  orderBy?: string;
 
   @Field(() => String, { nullable: true })
-  category?: string
+  category?: string;
 
   @Field(() => Int, { nullable: true })
   @Min(1)
   @Max(500)
-  skip?: number
+  skip?: number;
 
   @Field(() => String, { nullable: true })
-  name?: string
+  name?: string;
 }

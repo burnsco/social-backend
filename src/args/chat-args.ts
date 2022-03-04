@@ -1,7 +1,7 @@
-import { ArgsType, Field, Int } from "type-graphql"
+import { ArgsType, Field, Int } from 'type-graphql';
 
 @ArgsType()
 export default class ChatRoomArgsForQuery {
   @Field(() => Int)
-  categoryId: number
+  categoryId: number;
 }

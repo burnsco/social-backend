@@ -1,10 +1,10 @@
-import { Field, ObjectType } from "type-graphql"
+import { Field, ObjectType } from 'type-graphql';
 
 @ObjectType()
 export default class SomeoneAddedYou {
   @Field(() => String)
-  userWhoAddedYou: string
+  userWhoAddedYou: string;
 
   @Field(() => String)
-  userWhoWasAdded: string
+  userWhoWasAdded: string;
 }

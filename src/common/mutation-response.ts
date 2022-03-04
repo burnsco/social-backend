@@ -1,15 +1,16 @@
-import { Field, ObjectType } from "type-graphql"
+import { Field, ObjectType } from 'type-graphql';
 
 @ObjectType()
 export class FieldError {
   @Field()
-  field!: string
+  field!: string;
+
   @Field()
-  message!: string
+  message!: string;
 }
 
 @ObjectType()
 export default abstract class MutationResponse {
   @Field(() => [FieldError], { nullable: true })
-  errors?: FieldError[]
+  errors?: FieldError[];
 }

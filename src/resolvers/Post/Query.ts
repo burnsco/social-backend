@@ -1,16 +1,16 @@
-import { QueryOrder } from "@mikro-orm/core"
-import { Args, Ctx, FieldResolver, Query, Resolver, Root } from "type-graphql"
-import { PostArgs } from "../../args"
-import { _QueryMeta } from "../../common/_QueryMeta"
-import { Category, Comment, Post, User, Vote } from "../../entities"
-import { ContextType } from "../../types"
+import { QueryOrder } from '@mikro-orm/core';
+import { Args, Ctx, FieldResolver, Query, Resolver, Root } from 'type-graphql';
+import { PostArgs } from '../../args';
+import { _QueryMeta } from '../../common/_QueryMeta';
+import { Category, Comment, Post, User, Vote } from '../../entities';
+import { ContextType } from '../../types';
 
 @Resolver(() => Post)
 export default class PostQueryResolver {
   @Query(() => _QueryMeta)
   async _allPostsMeta(@Root() @Ctx() { em }: ContextType) {
-    const [, count] = await em.findAndCount(Post, {})
-    return { count }
+    const [, count] = await em.findAndCount(Post, {});
+    return { count };
   }
 
   @Query(() => _QueryMeta)
@@ -19,23 +19,23 @@ export default class PostQueryResolver {
     @Args()
     { name }: PostArgs,
     @Ctx()
-    { em }: ContextType
+    { em }: ContextType,
   ) {
     const [, count] = await em.findAndCount(Post, {
-      category: { name }
-    })
-    return { count }
+      category: { name },
+    });
+    return { count };
   }
 
   @Query(() => Post, { nullable: true })
   async post(@Args() { postId }: PostArgs, @Ctx() { em }: ContextType) {
-    return await em.findOne(Post, { id: postId })
+    return await em.findOne(Post, { id: postId });
   }
 
   @Query(() => [Post], { nullable: true })
   async posts(
     @Args() { first, skip, category, orderBy }: PostArgs,
-    @Ctx() { em }: ContextType
+    @Ctx() { em }: ContextType,
   ): Promise<Post[]> {
     if (category) {
       const posts = await em.find(
@@ -45,11 +45,11 @@ export default class PostQueryResolver {
           limit: first,
           offset: skip,
           orderBy: {
-            createdAt: orderBy === "asc" ? QueryOrder.ASC : QueryOrder.DESC
-          }
-        }
-      )
-      return posts
+            createdAt: orderBy === 'asc' ? QueryOrder.ASC : QueryOrder.DESC,
+          },
+        },
+      );
+      return posts;
     }
 
     const [posts] = await em.findAndCount(
@@ -59,30 +59,30 @@ export default class PostQueryResolver {
         limit: first,
         offset: skip,
         orderBy: {
-          createdAt: orderBy === "asc" ? QueryOrder.ASC : QueryOrder.DESC
-        }
-      }
-    )
-    return posts
+          createdAt: orderBy === 'asc' ? QueryOrder.ASC : QueryOrder.DESC,
+        },
+      },
+    );
+    return posts;
   }
 
   @FieldResolver(() => _QueryMeta, { nullable: true })
   async totalComments(@Root() post: Post, @Ctx() { em }: ContextType) {
-    const [, count] = await em.findAndCount(Comment, { post: { id: post.id } })
-    return { count }
+    const [, count] = await em.findAndCount(Comment, { post: { id: post.id } });
+    return { count };
   }
 
   @FieldResolver(() => _QueryMeta, { nullable: true })
   async totalVotes(@Root() post: Post, @Ctx() { em }: ContextType) {
     const [votes, count] = await em.findAndCount(Vote, {
-      post: { id: post.id }
-    })
+      post: { id: post.id },
+    });
     if (count > 0) {
-      const score = votes.map(item => item.value).reduce((a, b) => a + b)
+      const score = votes.map(item => item.value).reduce((a, b) => a + b);
 
-      return { count, score }
+      return { count, score };
     }
-    return { count, score: 0 }
+    return { count, score: 0 };
   }
 
   @FieldResolver({ nullable: true })
@@ -92,24 +92,24 @@ export default class PostQueryResolver {
       { post: { id: post.id } },
       {
         orderBy: {
-          createdAt: QueryOrder.DESC
-        }
-      }
-    )
+          createdAt: QueryOrder.DESC,
+        },
+      },
+    );
   }
 
   @FieldResolver({ nullable: true })
   async votes(@Root() post: Post) {
-    return post.votes
+    return post.votes;
   }
 
   @FieldResolver()
   async author(@Root() post: Post, @Ctx() { em }: ContextType) {
-    return await em.findOne(User, post.author.id)
+    return await em.findOne(User, post.author.id);
   }
 
   @FieldResolver()
   async category(@Root() post: Post, @Ctx() { em }: ContextType) {
-    return await em.findOne(Category, post.category.id)
+    return await em.findOne(Category, post.category.id);
   }
 }

@@ -1,10 +1,10 @@
-import { Field, InputType, Int } from "type-graphql"
+import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
 export default class VoteInput {
   @Field(() => Int)
-  postId: number
+  postId: number;
 
   @Field(() => Int)
-  value: number
+  value: number;
 }

@@ -1,4 +1,4 @@
 export type AddFriendPayload = {
-  userWhoAddedYou: string
-  userWhoWasAdded: string
-}
+  userWhoAddedYou: string;
+  userWhoWasAdded: string;
+};
