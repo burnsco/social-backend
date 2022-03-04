@@ -11,10 +11,12 @@ export default function initializeExpress() {
 
   const app = express();
 
+  const corsOrigin = 'https://studio.apollographql.com';
+
   app.set('trust proxy', 1);
   app.use(
     cors({
-      origin: 'https://studio.apollographql.com',
+      origin: '*',
       credentials: true,
     }),
   );

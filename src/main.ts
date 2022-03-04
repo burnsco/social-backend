@@ -1,5 +1,6 @@
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { ApolloServer } from 'apollo-server-express';
+import cors from 'cors';
 import 'dotenv-safe/config';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { createServer } from 'http';
@@ -17,6 +18,12 @@ async function main(): Promise<void> {
   const { app } = initializeExpress();
 
   const { redisClient, pubSub } = initializeRedis();
+
+  const corsOptions = {
+    origin: '*', // for now at least, for testing purposes,
+    // credentials: true,
+  };
+  app.use(cors(corsOptions));
 
   const schema = await buildSchema({
     resolvers: resolversArray,
