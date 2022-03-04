@@ -7,24 +7,25 @@ import {
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
-import { ID, Int, ObjectType } from 'type-graphql';
+import { Int, ObjectType } from 'type-graphql';
 import { Field } from 'type-graphql/dist/decorators/Field';
+import { v4 } from 'uuid';
 import { Category, Comment, User, Vote } from '.';
 
 @Entity()
 @ObjectType()
 export default class Post {
-  @Field(() => ID)
+  @Field(() => String)
   @PrimaryKey()
-  readonly id: number;
+  id: string = v4();
 
   @Field(() => String)
   @Property()
-  createdAt: string = new Date().toISOString();
+  createdAt: Date = new Date();
 
   @Field(() => String)
-  @Property({ onUpdate: () => new Date().toISOString() })
-  updatedAt: string = new Date().toISOString();
+  @Property({ onUpdate: () => new Date() })
+  updatedAt: Date = new Date();
 
   @Field(() => String)
   @Property()

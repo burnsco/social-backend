@@ -67,6 +67,9 @@ export default class UserMutationResolver {
       };
     }
     const user = em.create(User, {
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      online: true,
       email,
       username,
       password: await argon2.hash(password),

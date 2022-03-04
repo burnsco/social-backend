@@ -49,6 +49,8 @@ export default class PrivateMessageMutationResolver {
 
     if (user && receipent && req.session.userId) {
       const newmessage = em.create(PrivateMessage, {
+        createdAt: new Date(),
+        updatedAt: new Date(),
         body,
         sentBy: em.getReference(User, user.id),
         sentTo: em.getReference(User, receipent.id),

@@ -5,23 +5,24 @@ import {
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
-import { Field, ID, ObjectType } from 'type-graphql';
+import { Field, ObjectType } from 'type-graphql';
+import { v4 } from 'uuid';
 import { User } from '.';
 
 @Entity()
 @ObjectType()
 export default class PrivateMessage {
-  @Field(() => ID)
+  @Field(() => String)
   @PrimaryKey()
-  readonly id: number;
+  id: string = v4();
 
   @Field(() => String)
   @Property()
-  createdAt: string = new Date().toISOString();
+  createdAt: Date = new Date();
 
   @Field(() => String)
-  @Property({ onUpdate: () => new Date().toISOString() })
-  updatedAt: string = new Date().toISOString();
+  @Property({ onUpdate: () => new Date() })
+  updatedAt: Date = new Date();
 
   @Field()
   @Property()

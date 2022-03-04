@@ -1,7 +1,7 @@
-import { ArgsType, Field, Int } from 'type-graphql';
+import { ArgsType, Field, ID } from 'type-graphql';
 
 @ArgsType()
 export default class NewMessageArgs {
-  @Field(() => Int)
-  categoryId: number;
+  @Field(() => ID, { nullable: true })
+  categoryId: string;
 }

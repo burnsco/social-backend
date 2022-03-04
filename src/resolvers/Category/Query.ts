@@ -12,7 +12,7 @@ export default class CategoryQueryResolver {
     @Args() { categoryId }: NewMessageArgs,
     @Ctx() { em }: ContextType,
   ): Promise<Category | null> {
-    const category = em.findOne(Category, categoryId, {
+    const category = await em.findOne(Category, categoryId, {
       populate: ['messages', 'chatUsers'],
     });
     if (!category) {

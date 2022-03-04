@@ -1,10 +1,10 @@
-import { Field, InputType, Int } from 'type-graphql';
+import { Field, ID, InputType } from 'type-graphql';
 
 @InputType()
 export default class CommentInput {
   @Field(() => String)
   body: string;
 
-  @Field(() => Int)
-  postId: number;
+  @Field(() => ID)
+  postId: string;
 }

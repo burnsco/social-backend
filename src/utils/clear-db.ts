@@ -3,7 +3,7 @@ import type { Connection, IDatabaseDriver, MikroORM } from '@mikro-orm/core';
 export const clearDatabase = async (
   orm: MikroORM<IDatabaseDriver<Connection>>,
 ): Promise<void> => {
-  await orm.getSchemaGenerator().dropSchema(true, true);
+  await orm.getSchemaGenerator().dropSchema();
   const migrator = orm.getMigrator();
   const migrations = await migrator.getPendingMigrations();
   if (migrations && migrations.length > 0) {

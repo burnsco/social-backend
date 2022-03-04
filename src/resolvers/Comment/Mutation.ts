@@ -50,6 +50,8 @@ export default class CommentMutationResolver {
     }
 
     const comment = em.create(Comment, {
+      createdAt: new Date(),
+      updatedAt: new Date(),
       post: em.getReference(Post, post.id),
       body,
       createdBy: em.getReference(User, user.id),

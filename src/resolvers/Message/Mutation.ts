@@ -41,6 +41,8 @@ export default class MessageMutationResolver {
     }
     if (category && req.session.userId) {
       const message = em.create(Message, {
+        createdAt: new Date(),
+        updatedAt: new Date(),
         category: em.getReference(Category, category.id),
         content,
         sentBy: em.getReference(User, req.session.userId),
@@ -65,10 +67,10 @@ export default class MessageMutationResolver {
       return payload.category === args.categoryId;
     },
   })
-  newMessage(
+  async newMessage(
     @Root() newMessage: Message,
     @Args() { categoryId }: NewMessageArgs,
-  ): Message {
+  ): Promise<Message> {
     return newMessage;
   }
 }

@@ -19,6 +19,8 @@ export default class CategoryMutationResolver {
     const isNameInUse = await em.findOne(Category, { name: data.name });
     if (!isNameInUse) {
       const category = em.create(Category, {
+        createdAt: new Date(),
+        updatedAt: new Date(),
         name: data.name,
       });
       await em.persistAndFlush(category);

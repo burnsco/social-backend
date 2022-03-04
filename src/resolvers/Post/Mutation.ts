@@ -34,6 +34,8 @@ export default class PostMutationResolver {
       };
     }
     const post = em.create(Post, {
+      createdAt: new Date(),
+      updatedAt: new Date(),
       title,
       text,
       image,
@@ -150,6 +152,8 @@ export default class PostMutationResolver {
       }
 
       const vote = em.create(Vote, {
+        createdAt: new Date(),
+        updatedAt: new Date(),
         post,
         value,
         castBy: em.getReference(User, req.session.userId),

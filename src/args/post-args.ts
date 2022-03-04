@@ -1,13 +1,13 @@
 import { Max, Min } from 'class-validator';
-import { ArgsType, Field, Int } from 'type-graphql';
+import { ArgsType, Field, ID, Int } from 'type-graphql';
 
 @ArgsType()
 export default class PostArgs {
   @Field(() => Int, { nullable: true })
   first?: number;
 
-  @Field(() => Int, { nullable: true })
-  postId?: number;
+  @Field(() => ID, { nullable: true })
+  postId?: string;
 
   @Field(() => String, { nullable: true })
   orderBy?: string;

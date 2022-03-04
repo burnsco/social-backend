@@ -1,12 +1,12 @@
-import { Field, InputType, Int } from 'type-graphql';
+import { Field, ID, InputType } from 'type-graphql';
 
 @InputType()
 export default class EditPostInput {
-  @Field(() => Int)
-  postId?: number;
+  @Field(() => ID)
+  postId?: string;
 
-  @Field(() => Int)
-  categoryId?: number;
+  @Field(() => ID)
+  categoryId?: string;
 
   @Field(() => String)
   title?: string;

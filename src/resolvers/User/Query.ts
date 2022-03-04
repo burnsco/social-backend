@@ -1,6 +1,6 @@
 import type { Collection, LoadedCollection } from '@mikro-orm/core';
 import { LoadStrategy } from '@mikro-orm/core';
-import { Arg, Ctx, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, FieldResolver, Query, Resolver, Root } from 'type-graphql';
 import { Category, User } from '../../entities';
 import PrivateMessage from '../../entities/PrivateMessage';
 import { EditUserInput } from '../../inputs';
@@ -13,18 +13,18 @@ export default class UserQueryResolver {
     @Arg('data') data: EditUserInput,
     @Ctx() { em }: ContextType,
   ): Promise<User | null> {
-    return await em.findOne(User, { username: data.username });
+    return em.findOne(User, { username: data.username });
   }
 
   @Query(() => [User], { nullable: true })
   async users(@Ctx() { em }: ContextType): Promise<User[] | null> {
-    return await em.find(User, {});
+    return em.find(User, {});
   }
 
   @Query(() => User, { nullable: true })
   async me(@Ctx() { req, em }: ContextType): Promise<User | null> {
     if (req?.session?.userId) {
-      return await em.findOne(User, { id: req.session.userId });
+      return em.findOne(User, { id: req.session.userId });
     }
     return null;
   }
@@ -33,8 +33,7 @@ export default class UserQueryResolver {
   async myChatRooms(
     @Ctx() { req, em }: ContextType,
   ): Promise<
-    | (Collection<Category, unknown> & LoadedCollection<Category, Category>)
-    | null
+    (Collection<Category, unknown> & LoadedCollection<Category>) | null
   > {
     if (req?.session?.userId) {
       const user = await em.findOne(
@@ -56,7 +55,10 @@ export default class UserQueryResolver {
   @Query(() => [PrivateMessage], { nullable: true })
   async myPrivateMessages(
     @Ctx() { req, em }: ContextType,
-  ): Promise<PrivateMessage[] | null> {
+  ): Promise<
+    | (Collection<PrivateMessage, unknown> & LoadedCollection<PrivateMessage>)
+    | null
+  > {
     if (req?.session?.userId) {
       const user = await em.findOne(
         User,
@@ -67,8 +69,7 @@ export default class UserQueryResolver {
         },
       );
       if (user?.privateMessages) {
-        const privateMessages = user.privateMessages;
-        return privateMessages;
+        return user.privateMessages;
       }
     }
     return null;
@@ -77,9 +78,7 @@ export default class UserQueryResolver {
   @Query(() => [User], { nullable: true })
   async myFriends(
     @Ctx() { req, em }: ContextType,
-  ): Promise<
-    (Collection<User, unknown> & LoadedCollection<User, User>) | null
-  > {
+  ): Promise<(Collection<User, unknown> & LoadedCollection<User>) | null> {
     if (req?.session?.userId) {
       const user = await em.findOne(
         User,
@@ -95,5 +94,10 @@ export default class UserQueryResolver {
       }
     }
     return null;
+  }
+
+  @FieldResolver({ nullable: true })
+  async privateMessages(@Root() user: User) {
+    return user.privateMessages;
   }
 }
