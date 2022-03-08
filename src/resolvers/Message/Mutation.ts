@@ -1,4 +1,3 @@
-import { LoadStrategy } from '@mikro-orm/core';
 import {
   Arg,
   Args,
@@ -23,19 +22,12 @@ export default class MessageMutationResolver {
   @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
   async createMessage(
-    @Arg('data') { content, categoryId }: MessageInput,
+    @Arg('data') { content, categoryName }: MessageInput,
     @PubSub(Topic.NewMessage)
     notifyAboutNewMessage: Publisher<Message>,
     @Ctx() { em, req }: ContextType,
   ): Promise<boolean> {
-    const category = await em.findOne(
-      Category,
-      { id: categoryId },
-      {
-        populate: ['messages'],
-        strategy: LoadStrategy.JOINED,
-      },
-    );
+    const category = await em.findOne(Category, { name: categoryName });
     if (!category) {
       return false;
     }
@@ -48,8 +40,6 @@ export default class MessageMutationResolver {
         sentBy: em.getReference(User, req.session.userId),
       });
       em.persist(category);
-
-      category.messages.add(message);
 
       await em.flush();
       await notifyAboutNewMessage(message);
@@ -64,13 +54,23 @@ export default class MessageMutationResolver {
   @Subscription(() => Message, {
     topics: Topic.NewMessage,
     filter: ({ payload, args }) => {
-      return payload.category === args.categoryId;
+      console.log('subscription');
+      console.log('payload');
+      console.log(payload);
+      console.log('args');
+      console.log(args);
+      const isMatch = payload.category === args.categoryId;
+      console.log('ismatching');
+      console.log(isMatch);
+      return isMatch;
     },
   })
-  async newMessage(
+  newMessage(
     @Root() newMessage: Message,
     @Args() { categoryId }: NewMessageArgs,
-  ): Promise<Message> {
+  ): Message {
+    console.log('new message');
+    console.log(newMessage);
     return newMessage;
   }
 }

@@ -2,13 +2,15 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    es2020: true,
+    es2022: true,
     node: true,
   },
+  plugins: ['@typescript-eslint'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   ignorePatterns: ['node_modules', 'dist', 'coverage', '**/*.js', '**/*.d.ts'],
   parser: '@typescript-eslint/parser',
@@ -16,7 +18,6 @@ module.exports = {
     project: 'tsconfig.json',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/no-duplicate-imports': 'error',

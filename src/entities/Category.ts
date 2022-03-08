@@ -3,13 +3,12 @@ import {
   Collection,
   Entity,
   ManyToMany,
-  OneToMany,
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
 import { Field, ObjectType } from 'type-graphql';
 import { v4 } from 'uuid';
-import { Message, User } from '.';
+import { User } from '.';
 
 @Entity()
 @ObjectType()
@@ -33,13 +32,6 @@ export default class Category {
   @Field(() => String, { nullable: true })
   @Property({ nullable: true })
   avatar?: string;
-
-  @Field(() => [Message], { nullable: true })
-  @OneToMany(() => Message, message => message.category, {
-    cascade: [Cascade.ALL],
-    lazy: true,
-  })
-  messages = new Collection<Message>(this);
 
   @Field(() => [User], { nullable: true })
   @ManyToMany(() => User, user => user.chatRooms, {

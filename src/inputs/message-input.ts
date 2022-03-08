@@ -6,6 +6,9 @@ export default class MessageInput implements Partial<Message> {
   @Field()
   content: string;
 
+  @Field()
+  categoryName?: string;
+
   @Field(() => ID)
-  categoryId: string;
+  categoryId?: string;
 }

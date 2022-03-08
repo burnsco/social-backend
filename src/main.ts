@@ -24,6 +24,7 @@ async function main(): Promise<void> {
   });
 
   const httpServer = createServer(app);
+
   const wsServer = new WebSocketServer({
     server: httpServer,
     path: '/subscriptions',
@@ -70,6 +71,18 @@ async function main(): Promise<void> {
     useServer(
       {
         schema,
+        context: async (ctx, msg, args) => {
+          console.log(`useServerContext`);
+          console.log('ctx');
+          console.log(ctx);
+          console.log('msg');
+          console.log(msg);
+          console.log('args');
+          console.log(args);
+          return {
+            em: orm.em.fork(),
+          };
+        },
         onConnect: async ctx => {
           console.log(`Subscriptions connected`);
         },

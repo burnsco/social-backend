@@ -13,7 +13,7 @@ export default class CategoryQueryResolver {
     @Ctx() { em }: ContextType,
   ): Promise<Category | null> {
     const category = await em.findOne(Category, categoryId, {
-      populate: ['messages', 'chatUsers'],
+      populate: ['chatUsers'],
     });
     if (!category) {
       return null;

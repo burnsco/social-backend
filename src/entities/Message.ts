@@ -1,10 +1,4 @@
-import {
-  Cascade,
-  Entity,
-  ManyToOne,
-  PrimaryKey,
-  Property,
-} from '@mikro-orm/core';
+import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { Field, ObjectType } from 'type-graphql';
 import { v4 } from 'uuid';
 import { Category, User } from '.';
@@ -36,7 +30,7 @@ export default class Message {
 
   @Field(() => Category)
   @ManyToOne(() => Category, {
-    cascade: [Cascade.ALL],
+    onDelete: 'cascade',
   })
   category!: Category;
 }
