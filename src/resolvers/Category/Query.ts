@@ -2,7 +2,7 @@ import { QueryOrder } from '@mikro-orm/core';
 import { Args, Ctx, FieldResolver, Query, Resolver, Root } from 'type-graphql';
 import CategoryArgs from '../../args/category-args';
 import NewMessageArgs from '../../args/message-args';
-import { Category, Message, User } from '../../entities';
+import { Category, User } from '../../entities';
 import { ContextType } from '../../types';
 
 @Resolver(() => Category)
@@ -56,11 +56,6 @@ export default class CategoryQueryResolver {
       },
     );
     return categories;
-  }
-
-  @FieldResolver(() => [Message], { nullable: true })
-  messages(@Root() category: Category, @Ctx() { em }: ContextType) {
-    return em.find(Message, { category: { id: category.id } });
   }
 
   @FieldResolver(() => [User], { nullable: true })

@@ -40,7 +40,7 @@ export default class MessageMutationResolver {
         sentBy: em.getReference(User, req.session.userId),
       });
       em.persist(category);
-
+      em.persist(message);
       await em.flush();
       await notifyAboutNewMessage(message);
 
@@ -59,7 +59,7 @@ export default class MessageMutationResolver {
       console.log(payload);
       console.log('args');
       console.log(args);
-      const isMatch = payload.category === args.categoryId;
+      const isMatch = payload.category.id === args.categoryId;
       console.log('ismatching');
       console.log(isMatch);
       return isMatch;

@@ -76,7 +76,8 @@ export default class PrivateMessageMutationResolver {
   @Subscription(() => PrivateMessage, {
     topics: Topic.NewPrivateMessage,
     filter: ({ payload, args }) => {
-      return payload.sentTo === args.userId;
+      const isMatch = payload.sentTo === args.userId;
+      return isMatch;
     },
   })
   newPrivateMessage(
