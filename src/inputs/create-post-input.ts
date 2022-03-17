@@ -1,9 +1,12 @@
-import { Field, ID, InputType, Int } from 'type-graphql';
+import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
 export default class CreatePostInput {
-  @Field(() => ID)
+  @Field(() => String)
   categoryId: string;
+
+  @Field(() => String)
+  categoryName: string;
 
   @Field(() => String)
   title: string;

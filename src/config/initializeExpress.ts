@@ -6,6 +6,8 @@ import 'reflect-metadata';
 import { COOKIE_NAME } from '../common/constants';
 import initializeRedis from './redisConfig';
 
+const APOLLO_STUDIO_URL = 'https://studio.apollographql.com';
+
 export default function initializeExpress() {
   const { redisStore, redisClient } = initializeRedis();
 
@@ -14,7 +16,7 @@ export default function initializeExpress() {
   app.set('trust proxy', process.env.NODE_ENV !== 'production');
   app.use(
     cors({
-      origin: 'https://studio.apollographql.com',
+      origin: process.env.CORS_ORIGIN,
       credentials: true,
     }),
   );
@@ -27,7 +29,7 @@ export default function initializeExpress() {
       cookie: {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-        sameSite: 'none',
+        sameSite: 'lax',
         secure: true,
       },
       saveUninitialized: false,

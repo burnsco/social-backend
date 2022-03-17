@@ -60,7 +60,7 @@ async function main(): Promise<void> {
 
   const corsOptions = {
     credentials: true,
-    origin: 'https://studio.apollographql.com',
+    origin: process.env.CORS_ORIGIN,
   };
 
   apolloServer.applyMiddleware({ app, cors: corsOptions });
@@ -72,13 +72,6 @@ async function main(): Promise<void> {
       {
         schema,
         context: async (ctx, msg, args) => {
-          console.log(`useServerContext`);
-          console.log('ctx');
-          console.log(ctx);
-          console.log('msg');
-          console.log(msg);
-          console.log('args');
-          console.log(args);
           return {
             em: orm.em.fork(),
           };
