@@ -5,7 +5,6 @@ import {
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
-import { GraphQLEmail } from 'graphql-custom-types';
 import { Field, ObjectType } from 'type-graphql';
 import { v4 } from 'uuid';
 import { Category, PrivateMessage } from '.';
@@ -29,7 +28,7 @@ export default class User {
   @Property()
   online?: boolean;
 
-  @Field(() => GraphQLEmail)
+  @Field(() => String)
   @Property()
   email!: string;
 
