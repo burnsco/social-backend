@@ -5,7 +5,7 @@ import { RedisPubSub } from 'graphql-redis-subscriptions';
 import Redis from 'ioredis';
 import 'reflect-metadata';
 
-const options: Redis.RedisOptions = {
+const options = {
   host: process.env.REDIS_HOST,
   port: 6379,
   password: process.env.REDIS_PASSWORD,
