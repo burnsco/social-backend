@@ -5,7 +5,8 @@ declare global {
       DB_HOST: string;
       DB_USER: string;
       DB_PASSWORD: string;
-      DB_DBNAME: string;
+      DB_NAME: string;
+      DB_URL: string;
       REDIS_URL: string;
       REDIS_HOST: string;
       REDIS_PASSWORD: string;
