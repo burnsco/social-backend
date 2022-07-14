@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  social-backend-prod:
+    build:
+      context: ../../
+      dockerfile: docker/development/Dockerfile
+    image: social-backend-prod
+    ports:
+      - '4000:4000'
+    depends_on:
+      - db
+      - redis
+    networks:
+      - social-network-prod
+    environment:
+      DB_HOST: db
+      REDIS_HOST: redis
+    command: ['./wait-for-postgres.sh', 'db:5432', '--', 'node', 'index.js']
+
+  db:
+    image: postgres:latestr
+    networks:
+      - social-network-prod
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+  redis:
+    image: redis/redis-stack-server
+    networks:
+      - social-network-prod
+
+networks:
+  social-network-prod:
