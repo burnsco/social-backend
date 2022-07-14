@@ -4,9 +4,9 @@ WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
-COPY .env.production .env
+COPY .env.staging .env
 RUN yarn build
-ENV NODE_ENV production
+ENV NODE_ENV staging
 USER node
 EXPOSE 4000
 
