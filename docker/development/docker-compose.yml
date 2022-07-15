@@ -13,7 +13,7 @@ services:
       - db
       - redis
     networks:
-      - social-network-dev
+      - proxy
     volumes:
       - .:/code
 
@@ -21,17 +21,21 @@ services:
     image: postgres:latest
     container_name: db
     networks:
-      - social-network-dev
+      - proxy
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
 
   redis:
+    networks:
+      - proxy
     image: redis/redis-stack:latest
     container_name: redis
     ports:
       - '6379:6379'
       - '8001:8001'
-    networks:
-      - social-network-dev
+
+networks:
+  proxy:
+    external: true
