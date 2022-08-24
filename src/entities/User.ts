@@ -24,7 +24,7 @@ export default class User {
   @Property({ onUpdate: () => new Date() })
   updatedAt: Date = new Date();
 
-  @Field(() => Boolean, { defaultValue: true })
+  @Field(() => Boolean, { defaultValue: false })
   @Property()
   online?: boolean;
 
