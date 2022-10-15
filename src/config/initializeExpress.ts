@@ -30,7 +30,7 @@ export default function initializeExpress() {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
         sameSite: 'lax',
-        secure: true,
+        secure: 'auto',
       },
       saveUninitialized: false,
       secret: process.env.SESSION_SECRET,
