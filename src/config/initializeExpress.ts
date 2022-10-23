@@ -16,7 +16,7 @@ export default function initializeExpress() {
   app.set('trust proxy', process.env.NODE_ENV !== 'production');
   app.use(
     cors({
-      origin: process.env.CORS_ORIGIN,
+      origin: 'https://studio.apollographql.com',
       credentials: true,
     }),
   );
@@ -29,8 +29,10 @@ export default function initializeExpress() {
       cookie: {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-        sameSite: 'lax',
-        secure: 'auto',
+        // sameSite: 'lax',
+        // secure: 'auto',
+        sameSite: 'none',
+        secure: true,
       },
       saveUninitialized: false,
       secret: process.env.SESSION_SECRET,
