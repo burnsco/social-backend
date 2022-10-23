@@ -59,7 +59,7 @@ async function main(): Promise<void> {
 
   const corsOptions = {
     credentials: true,
-    origin: process.env.CORS_ORIGIN,
+    origin: 'https://studio.apollographql.com',
   };
 
   apolloServer.applyMiddleware({ app, cors: corsOptions });
@@ -76,6 +76,7 @@ async function main(): Promise<void> {
           };
         },
         onConnect: async ctx => {
+          console.log(ctx);
           console.log(`Subscriptions connected`);
         },
         onDisconnect: async ctx => {
