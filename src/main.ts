@@ -12,6 +12,10 @@ import { WebSocketServer } from 'ws'
 import { initializeDB, initializeExpress, initializeRedis } from './config'
 import { resolversArray } from './resolvers/resolvers'
 
+// todo fix the user connection so it goes online/offline properly
+// todo make it easier to test on apollo studio (user cookie? token? )
+// todo possible make it so that everything is a sub, or more things at least
+
 async function main(): Promise<void> {
   const { orm } = await initializeDB()
   const { app } = initializeExpress()
