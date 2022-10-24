@@ -60,7 +60,7 @@ module.exports = {
       'single',
       { avoidEscape: true, allowTemplateLiterals: true },
     ],
-    '@typescript-eslint/semi': ['error', 'always'],
+    '@typescript-eslint/semi': 'off',
     '@typescript-eslint/no-useless-constructor': 'error',
     '@typescript-eslint/no-redeclare': ['error'],
     '@typescript-eslint/member-delimiter-style': [
