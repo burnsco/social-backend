@@ -1,4 +1,4 @@
-import { LoadStrategy } from '@mikro-orm/core';
+import { LoadStrategy } from '@mikro-orm/core'
 import {
   Arg,
   Args,
@@ -10,14 +10,14 @@ import {
   Root,
   Subscription,
   UseMiddleware,
-} from 'type-graphql';
-import PrivateMessageArgs from '../../args/private-message-args';
-import { Topic } from '../../common/topics';
-import { User } from '../../entities';
-import PrivateMessage from '../../entities/PrivateMessage';
-import PrivateMessageInput from '../../inputs/private-message-input';
-import { isAuth } from '../../lib/isAuth';
-import { ContextType } from '../../types';
+} from 'type-graphql'
+import PrivateMessageArgs from '../../args/private-message-args'
+import { Topic } from '../../common/topics'
+import { User } from '../../entities'
+import PrivateMessage from '../../entities/PrivateMessage'
+import PrivateMessageInput from '../../inputs/private-message-input'
+import { isAuth } from '../../lib/isAuth'
+import { ContextType } from '../../types'
 
 @Resolver(() => PrivateMessage)
 export default class PrivateMessageMutationResolver {
@@ -37,7 +37,7 @@ export default class PrivateMessageMutationResolver {
         populate: ['privateMessages'],
         strategy: LoadStrategy.JOINED,
       },
-    );
+    )
     const receipent = await em.findOne(
       User,
       { id: userId },
@@ -45,7 +45,7 @@ export default class PrivateMessageMutationResolver {
         populate: ['privateMessages'],
         strategy: LoadStrategy.JOINED,
       },
-    );
+    )
 
     if (user && receipent && req.session.userId) {
       const newmessage = em.create(PrivateMessage, {
@@ -54,21 +54,21 @@ export default class PrivateMessageMutationResolver {
         body,
         sentBy: em.getReference(User, user.id),
         sentTo: em.getReference(User, receipent.id),
-      });
+      })
 
-      em.persist(user);
-      em.persist(receipent);
-      em.persist(newmessage);
+      em.persist(user)
+      em.persist(receipent)
+      em.persist(newmessage)
 
-      user.privateMessages.add(newmessage);
-      receipent.privateMessages.add(newmessage);
+      user.privateMessages.add(newmessage)
+      receipent.privateMessages.add(newmessage)
 
-      await em.flush();
-      await notifyAboutNewPrivateMessage(newmessage);
+      await em.flush()
+      await notifyAboutNewPrivateMessage(newmessage)
 
-      return true;
+      return true
     }
-    return false;
+    return false
   }
 
   // *** SUBSCRIPTION *** \\
@@ -76,14 +76,14 @@ export default class PrivateMessageMutationResolver {
   @Subscription(() => PrivateMessage, {
     topics: Topic.NewPrivateMessage,
     filter: ({ payload, args }) => {
-      const isMatch = payload.sentTo === args.userId;
-      return isMatch;
+      const isMatch = payload.sentTo === args.userId
+      return isMatch
     },
   })
   newPrivateMessage(
     @Root() newPrivateMessage: PrivateMessage,
     @Args() { userId }: PrivateMessageArgs,
   ): PrivateMessage {
-    return newPrivateMessage;
+    return newPrivateMessage
   }
 }
