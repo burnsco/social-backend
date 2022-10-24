@@ -4,58 +4,58 @@ import {
   ManyToMany,
   PrimaryKey,
   Property,
-} from '@mikro-orm/core';
-import { Field, ObjectType } from 'type-graphql';
-import { v4 } from 'uuid';
-import { Category, PrivateMessage } from '.';
+} from '@mikro-orm/core'
+import { Field, ObjectType } from 'type-graphql'
+import { v4 } from 'uuid'
+import { Category, PrivateMessage } from '.'
 
 @Entity()
 @ObjectType()
 export default class User {
   @Field(() => String)
   @PrimaryKey()
-  id: string = v4();
+  id: string = v4()
 
   @Field(() => String)
   @Property()
-  createdAt: Date = new Date();
+  createdAt: Date = new Date()
 
   @Field(() => String)
   @Property({ onUpdate: () => new Date() })
-  updatedAt: Date = new Date();
+  updatedAt: Date = new Date()
 
   @Field(() => Boolean, { defaultValue: false })
   @Property()
-  online?: boolean;
+  online?: boolean
 
   @Field(() => String)
   @Property()
-  email!: string;
+  email!: string
 
   @Field(() => String)
   @Property({ unique: true })
-  username!: string;
+  username!: string
 
   @Property()
-  password!: string;
+  password!: string
 
   @Field(() => String, { nullable: true })
   @Property({ nullable: true })
-  avatar?: string;
+  avatar?: string
 
   @Field(() => String, { nullable: true })
   @Property({ nullable: true })
-  about?: string;
+  about?: string
 
   @Field(() => [User])
   @ManyToMany(() => User)
-  friends = new Collection<User>(this);
+  friends = new Collection<User>(this)
 
   @Field(() => [PrivateMessage])
   @ManyToMany(() => PrivateMessage)
-  privateMessages = new Collection<PrivateMessage>(this);
+  privateMessages = new Collection<PrivateMessage>(this)
 
   @Field(() => [Category])
   @ManyToMany(() => Category)
-  chatRooms = new Collection<Category>(this);
+  chatRooms = new Collection<Category>(this)
 }
