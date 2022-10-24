@@ -21,7 +21,13 @@ export default class UserQueryResolver {
   @Query(() => User, { nullable: true })
   async me(@Ctx() { req, em }: ContextType): Promise<User | null> {
     if (req?.session?.userId) {
-      return em.findOne(User, { id: req.session.userId })
+      return em.findOne(
+        User,
+        { id: req.session.userId },
+        {
+          populate: ['friends', 'privateMessages'],
+        },
+      )
     }
     return null
   }
@@ -29,6 +35,11 @@ export default class UserQueryResolver {
   @FieldResolver({ nullable: true })
   async privateMessages(@Root() user: User) {
     return user.privateMessages
+  }
+
+  @FieldResolver({ nullable: true })
+  async chatRooms(@Root() user: User) {
+    return user.chatRooms
   }
 
   @FieldResolver({ nullable: true })
