@@ -1,10 +1,10 @@
-import { Field, Int, ObjectType } from 'type-graphql';
+import { Field, Int, ObjectType } from 'type-graphql'
 
 @ObjectType()
 export class _QueryMeta {
   @Field(() => Int, { nullable: true })
-  count: number;
+  count: number
 
   @Field(() => Int, { nullable: true })
-  score: number;
+  score: number
 }

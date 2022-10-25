@@ -1,5 +1,6 @@
 import { LoadStrategy } from '@mikro-orm/core'
 import argon2 from 'argon2'
+import nodemailer from 'nodemailer'
 import {
   Arg,
   Ctx,
@@ -36,9 +37,34 @@ export default class UserMutationResolver {
     @Arg('email') data: EditUserInput,
     @Ctx() { em }: ContextType,
   ): Promise<boolean> {
-    // #TODO add a nodemailer function for password reset
     const user = await em.findOne(User, { email: data.email })
+
     if (user) {
+      const transporter = nodemailer.createTransport({
+        host: 'smtp-mail.outlook.com',
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+          user: process.env.ADMIN_EMAIL, // generated ethereal user
+          pass: process.env.ADMIN_PASS, // generated ethereal password
+        },
+      })
+
+      // send mail with defined transport object
+      const info = await transporter.sendMail({
+        from: '"Corey Burns 👻" <coreyburns@outlook.com>', // sender address
+        to: 'coreymburns@gmail.com', // list of receivers
+        subject: 'Hello ✔', // Subject line
+        text: 'Hello world?', // plain text body
+        html: '<b>Hello world?</b>', // html body
+      })
+
+      console.log('Message sent: %s', info.messageId)
+      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+      // Preview only available when sending through an Ethereal account
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
       return true
     }
     return false
