@@ -40,7 +40,6 @@ async function main(): Promise<void> {
         }
       },
       onConnect: async ctx => {
-        console.log(ctx)
         console.log(`Subscriptions connected`)
       },
       onDisconnect: async ctx => {
