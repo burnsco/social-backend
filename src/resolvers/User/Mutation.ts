@@ -35,10 +35,10 @@ import { ContextType } from '../../types'
 export default class UserMutationResolver {
   @Mutation(() => Boolean)
   async forgotPassword(
-    @Arg('email') data: EditUserInput,
+    @Arg('email') email: string,
     @Ctx() { em, redis }: ContextType,
   ): Promise<boolean> {
-    const user = await em.findOne(User, { email: data.email })
+    const user = await em.findOne(User, { email })
 
     if (user) {
       const token = v4()
@@ -50,6 +50,8 @@ export default class UserMutationResolver {
         1000 * 60 * 60 * 24 * 3,
       ) // 3 days
 
+      console.log('token')
+      console.log(token)
       const transporter = nodemailer.createTransport({
         host: 'smtp-mail.outlook.com',
         port: 587,
@@ -70,18 +72,19 @@ export default class UserMutationResolver {
         </p>
         `,
       })
+      console.log('email info')
       console.log(info)
       return true
     }
     return false
   }
 
-  @Mutation(() => User)
+  @Mutation(() => UserMutationResponse)
   async changePassword(
     @Arg('token') token: string,
     @Arg('newPassword') newPassword: string,
     @Ctx() { redis, req, em }: ContextType,
-  ): Promise<UserMutationResponse | null | boolean> {
+  ): Promise<UserMutationResponse | null> {
     if (newPassword.length <= 2) {
       return {
         errors: [
@@ -105,9 +108,7 @@ export default class UserMutationResolver {
         ],
       }
     }
-
     const user = await em.findOneOrFail(User, { id: userId })
-
     if (!user) {
       return {
         errors: [

@@ -29,9 +29,9 @@ export const emailAvailable = {
 }
 
 // CATEGORY
-export const subRedditNameInUse = {
+export const categoryNameInUse = {
   field: 'name',
-  message: 'Subreddit name is already in use.',
+  message: 'Category name is already in use.',
 }
 
 export const commentNotFound = {
