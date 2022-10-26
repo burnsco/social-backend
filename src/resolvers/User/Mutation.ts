@@ -12,6 +12,7 @@ import {
   Subscription,
   UseMiddleware,
 } from 'type-graphql'
+import { v4 } from 'uuid'
 import {
   COOKIE_NAME,
   emailInUse,
@@ -35,39 +36,100 @@ export default class UserMutationResolver {
   @Mutation(() => Boolean)
   async forgotPassword(
     @Arg('email') data: EditUserInput,
-    @Ctx() { em }: ContextType,
+    @Ctx() { em, redis }: ContextType,
   ): Promise<boolean> {
     const user = await em.findOne(User, { email: data.email })
 
     if (user) {
+      const token = v4()
+
+      await redis.set(
+        `forget-password:` + token,
+        user.id,
+        'ex',
+        1000 * 60 * 60 * 24 * 3,
+      ) // 3 days
+
       const transporter = nodemailer.createTransport({
         host: 'smtp-mail.outlook.com',
         port: 587,
-        secure: false, // true for 465, false for other ports
+        secure: false,
         auth: {
-          user: process.env.ADMIN_EMAIL, // generated ethereal user
-          pass: process.env.ADMIN_PASS, // generated ethereal password
+          user: process.env.ADMIN_EMAIL,
+          pass: process.env.ADMIN_PASS,
         },
       })
-
-      // send mail with defined transport object
       const info = await transporter.sendMail({
-        from: '"Corey Burns 👻" <coreyburns@outlook.com>', // sender address
-        to: 'coreymburns@gmail.com', // list of receivers
-        subject: 'Hello ✔', // Subject line
-        text: 'Hello world?', // plain text body
-        html: '<b>Hello world?</b>', // html body
+        from: '"Admin@Social 👻" <coreyburns@outlook.com>',
+        to: user.email,
+        subject: 'Forgot Password',
+        html: `
+        <p>Did you forget your password? Then click the link below.</p>
+        <p>
+        <a href="http://localhost:3000/change-password/${token}">reset password</a>
+        </p>
+        `,
       })
-
-      console.log('Message sent: %s', info.messageId)
-      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-      // Preview only available when sending through an Ethereal account
-      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
-      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+      console.log(info)
       return true
     }
     return false
+  }
+
+  @Mutation(() => User)
+  async changePassword(
+    @Arg('token') token: string,
+    @Arg('newPassword') newPassword: string,
+    @Ctx() { redis, req, em }: ContextType,
+  ): Promise<UserMutationResponse | null | boolean> {
+    if (newPassword.length <= 2) {
+      return {
+        errors: [
+          {
+            field: 'newPassword',
+            message: 'length must be greater than 2',
+          },
+        ],
+      }
+    }
+
+    const key = `forget-password:` + token
+    const userId = await redis.get(key)
+    if (!userId) {
+      return {
+        errors: [
+          {
+            field: 'token',
+            message: 'token expired',
+          },
+        ],
+      }
+    }
+
+    const user = await em.findOneOrFail(User, { id: userId })
+
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: 'token',
+            message: 'user no longer exists',
+          },
+        ],
+      }
+    }
+
+    user.password = await argon2.hash(newPassword)
+
+    await redis.del(key)
+
+    await em.persistAndFlush(user)
+
+    req.session.userId = user.id
+
+    return {
+      user,
+    }
   }
 
   @Mutation(() => UserMutationResponse)
