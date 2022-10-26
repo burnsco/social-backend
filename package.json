@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Typescript-Express-Apollo Backend for Reddit Clone",
+  "description": "A social media backend written in Typescript.",
   "main": "index.js",
   "private": true,
   "author": "Corey Burns",
