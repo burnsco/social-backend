@@ -31,6 +31,7 @@ async function main(): Promise<void> {
     server: httpServer,
     path: '/subscriptions',
   })
+
   const serverCleanup = useServer(
     {
       schema,
@@ -48,6 +49,7 @@ async function main(): Promise<void> {
     },
     wsServer,
   )
+
   const apolloServer = new ApolloServer({
     schema,
     plugins: [

@@ -1,8 +1,8 @@
-import { QueryOrder } from '@mikro-orm/core';
-import { Args, Ctx, FieldResolver, Query, Resolver, Root } from 'type-graphql';
-import { PostArgs } from '../../args';
-import { Comment, Post, User } from '../../entities';
-import { ContextType } from '../../types';
+import { QueryOrder } from '@mikro-orm/core'
+import { Args, Ctx, FieldResolver, Query, Resolver, Root } from 'type-graphql'
+import { PostArgs } from '../../args'
+import { Comment, Post, User } from '../../entities'
+import { ContextType } from '../../types'
 
 @Resolver(() => Comment)
 export default class CommentQueryResolver {
@@ -11,7 +11,7 @@ export default class CommentQueryResolver {
     @Args() { postId }: PostArgs,
     @Ctx() { em }: ContextType,
   ): Promise<Comment | null> {
-    return await em.findOne(Comment, { post: { id: postId } });
+    return await em.findOne(Comment, { post: { id: postId } })
   }
 
   @Query(() => [Comment], { nullable: true })
@@ -29,8 +29,8 @@ export default class CommentQueryResolver {
           createdAt: QueryOrder.DESC,
         },
       },
-    );
-    return comments;
+    )
+    return comments
   }
 
   @FieldResolver()
@@ -38,7 +38,7 @@ export default class CommentQueryResolver {
     @Root() comment: Comment,
     @Ctx() { em }: ContextType,
   ): Promise<User | null> {
-    return await em.findOne(User, comment.createdBy.id);
+    return await em.findOne(User, comment.createdBy.id)
   }
 
   @FieldResolver()
@@ -46,6 +46,6 @@ export default class CommentQueryResolver {
     @Root() comment: Comment,
     @Ctx() { em }: ContextType,
   ): Promise<Post | null> {
-    return await em.findOne(Post, comment.post.id);
+    return await em.findOne(Post, comment.post.id)
   }
 }

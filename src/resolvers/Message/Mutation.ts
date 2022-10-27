@@ -9,13 +9,13 @@ import {
   Root,
   Subscription,
   UseMiddleware,
-} from 'type-graphql';
-import NewMessageArgs from '../../args/message-args';
-import { Topic } from '../../common/topics';
-import { Category, Message, User } from '../../entities';
-import MessageInput from '../../inputs/message-input';
-import { isAuth } from '../../lib/isAuth';
-import { ContextType } from '../../types';
+} from 'type-graphql'
+import NewMessageArgs from '../../args/message-args'
+import { Topic } from '../../common/topics'
+import { Category, Message, User } from '../../entities'
+import MessageInput from '../../inputs/message-input'
+import { isAuth } from '../../lib/isAuth'
+import { ContextType } from '../../types'
 
 @Resolver(() => Message)
 export default class MessageMutationResolver {
@@ -27,9 +27,9 @@ export default class MessageMutationResolver {
     notifyAboutNewMessage: Publisher<Message>,
     @Ctx() { em, req }: ContextType,
   ): Promise<boolean> {
-    const category = await em.findOne(Category, { name: categoryName });
+    const category = await em.findOne(Category, { name: categoryName })
     if (!category) {
-      return false;
+      return false
     }
     if (category && req.session.userId) {
       const message = em.create(Message, {
@@ -38,15 +38,15 @@ export default class MessageMutationResolver {
         category: em.getReference(Category, category.id),
         content,
         sentBy: em.getReference(User, req.session.userId),
-      });
-      em.persist(category);
-      em.persist(message);
-      await em.flush();
-      await notifyAboutNewMessage(message);
+      })
+      em.persist(category)
+      em.persist(message)
+      await em.flush()
+      await notifyAboutNewMessage(message)
 
-      return true;
+      return true
     }
-    return false;
+    return false
   }
 
   // *** SUBSCRIPTION *** \\
@@ -54,23 +54,23 @@ export default class MessageMutationResolver {
   @Subscription(() => Message, {
     topics: Topic.NewMessage,
     filter: ({ payload, args }) => {
-      console.log('subscription');
-      console.log('payload');
-      console.log(payload);
-      console.log('args');
-      console.log(args);
-      const isMatch = payload.category.id === args.categoryId;
-      console.log('ismatching');
-      console.log(isMatch);
-      return isMatch;
+      console.log('subscription')
+      console.log('payload')
+      console.log(payload)
+      console.log('args')
+      console.log(args)
+      const isMatch = payload.category.id === args.categoryId
+      console.log('ismatching')
+      console.log(isMatch)
+      return isMatch
     },
   })
   newMessage(
     @Root() newMessage: Message,
     @Args() { categoryId }: NewMessageArgs,
   ): Message {
-    console.log('new message');
-    console.log(newMessage);
-    return newMessage;
+    console.log('new message')
+    console.log(newMessage)
+    return newMessage
   }
 }
