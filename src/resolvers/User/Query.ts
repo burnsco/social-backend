@@ -10,7 +10,11 @@ export default class UserQueryResolver {
     @Arg('data') data: EditUserInput,
     @Ctx() { em }: ContextType,
   ): Promise<User | null> {
-    return em.findOne(User, { username: data.username })
+    return em.findOne(
+      User,
+      { username: data.username },
+      { populate: ['chatRooms', 'privateMessages'] },
+    )
   }
 
   @Query(() => [User], { nullable: true })
