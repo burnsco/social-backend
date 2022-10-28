@@ -5,38 +5,38 @@ import {
   ManyToMany,
   PrimaryKey,
   Property,
-} from '@mikro-orm/core';
-import { Field, ObjectType } from 'type-graphql';
-import { v4 } from 'uuid';
-import { User } from '.';
+} from '@mikro-orm/core'
+import { Field, ObjectType } from 'type-graphql'
+import { v4 } from 'uuid'
+import { User } from '.'
 
 @Entity()
 @ObjectType()
 export default class Category {
   @Field(() => String)
   @PrimaryKey()
-  id: string = v4();
+  id: string = v4()
 
   @Field(() => String)
   @Property()
-  createdAt: Date = new Date();
+  createdAt: Date = new Date()
 
   @Field(() => String)
   @Property({ onUpdate: () => new Date() })
-  updatedAt: Date = new Date();
+  updatedAt: Date = new Date()
 
   @Field()
   @Property({ unique: true })
-  name!: string;
+  name!: string
 
   @Field(() => String, { nullable: true })
   @Property({ nullable: true })
-  avatar?: string;
+  avatar?: string
 
   @Field(() => [User], { nullable: true })
   @ManyToMany(() => User, user => user.chatRooms, {
     cascade: [Cascade.ALL],
     lazy: true,
   })
-  chatUsers = new Collection<User>(this);
+  chatUsers = new Collection<User>(this)
 }

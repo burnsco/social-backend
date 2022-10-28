@@ -10,6 +10,7 @@ import 'reflect-metadata'
 import { buildSchema } from 'type-graphql'
 import { WebSocketServer } from 'ws'
 import { initializeDB, initializeExpress, initializeRedis } from './config'
+import User from './entities/User'
 import { resolversArray } from './resolvers/resolvers'
 
 // todo fix the user connection so it goes online/offline properly
@@ -41,10 +42,34 @@ async function main(): Promise<void> {
         }
       },
       onConnect: async ctx => {
-        console.log(`Subscriptions connected`)
+        console.log(`Subscriptions CONNECTED`)
+
+        console.log(ctx.connectionParams?.Authorization)
+
+        if (ctx.connectionParams?.Authorization) {
+          const userId = ctx.connectionParams.Authorization
+          const user = await orm.em.findOne(User, { id: userId })
+
+          if (user) {
+            user.online = true
+            console.log(`User ${user.username} is now ONLINE`)
+            await orm.em.flush()
+          }
+        }
       },
       onDisconnect: async ctx => {
-        console.log(`Subscriptions disconnected`)
+        console.log(`Subscriptions DISCONNECTED`)
+
+        if (ctx.connectionParams?.Authorization) {
+          const userId = ctx.connectionParams.Authorization
+          const user = await orm.em.findOne(User, { id: userId })
+
+          if (user) {
+            user.online = false
+            console.log(`User ${user.username} is now OFFLINE`)
+            await orm.em.flush()
+          }
+        }
       },
     },
     wsServer,
