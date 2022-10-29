@@ -20,7 +20,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "start": "nodemon --inspect=0.0.0.0 dist/main.js",
-    "start:prod": "node dist/main.js",
+    "prod": "node dist/main.js",
     "dev": "nodemon dist/main.js",
     "create-seeder": "mikro-orm seeder:create",
     "seed-db": "mikro-orm seeder:run",

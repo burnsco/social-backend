@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:16
 
 WORKDIR /usr/src/app
 COPY package.json  ./
@@ -10,4 +10,4 @@ ENV NODE_ENV production
 USER node
 EXPOSE 4000
 
-CMD [ "npm", "start:prod" ]
+CMD [ "yarn", "prod" ]
