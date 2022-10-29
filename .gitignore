@@ -12,7 +12,7 @@
 /.next/
 /out/
 
-*.env
+.env.production
 # production
 dist
 /build
