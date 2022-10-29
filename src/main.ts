@@ -96,7 +96,11 @@ async function main(): Promise<void> {
     '/graphql',
     cors({
       credentials: true,
-      origin: ['https://studio.apollographql.com', 'http://localhost:3000'],
+      origin: [
+        'https://studio.apollographql.com',
+        'http://localhost:3000',
+        'http://social.coreyburns.dev',
+      ],
     }),
     json(),
     expressMiddleware(apolloServer, {

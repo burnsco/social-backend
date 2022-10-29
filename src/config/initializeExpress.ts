@@ -16,7 +16,11 @@ export default function initializeExpress() {
   app.set('trust proxy', process.env.NODE_ENV !== 'production')
   app.use(
     cors({
-      origin: ['https://studio.apollographql.com', 'http://localhost:3000'],
+      origin: [
+        'https://studio.apollographql.com',
+        'http://localhost:3000',
+        'http://social.coreyburns.dev',
+      ],
       credentials: true,
     }),
   )

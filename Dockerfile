@@ -1,13 +1,13 @@
-FROM node:16
+FROM node:18
 
 WORKDIR /usr/src/app
-COPY package.json yarn.lock ./
-RUN yarn install
+COPY package.json  ./
+RUN npm install
 COPY . .
 COPY .env.production .env
-RUN yarn build
+RUN npm run build
 ENV NODE_ENV production
 USER node
 EXPOSE 4000
 
-CMD [ "yarn", "start:prod" ]
+CMD [ "npm", "start:prod" ]
