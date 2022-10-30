@@ -101,6 +101,7 @@ async function main(): Promise<void> {
         'http://localhost:3000',
         'http://localhost:3002',
         'http://social.coreyburns.dev',
+        'http://social.coreyburns.dev:3000',
         'http://143.198.37.31:3002',
       ],
     }),
