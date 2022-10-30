@@ -99,7 +99,9 @@ async function main(): Promise<void> {
       origin: [
         'https://studio.apollographql.com',
         'http://localhost:3000',
+        'http://localhost:3002',
         'http://social.coreyburns.dev',
+        'http://143.198.37.31:3002',
       ],
     }),
     json(),
