@@ -1,17 +1,10 @@
-import {
-  Arg,
-  Args,
-  Ctx,
-  Mutation,
-  Resolver,
-  UseMiddleware,
-} from 'type-graphql';
-import PostArgs from '../../args/post-args';
-import { Category, Post, User, Vote } from '../../entities';
-import { CreatePostInput, EditPostInput, VoteInput } from '../../inputs';
-import { isAuth } from '../../lib/isAuth';
-import { PostMutationResponse, VoteMutationResponse } from '../../responses';
-import { ContextType } from '../../types';
+import { Arg, Args, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql'
+import PostArgs from '../../args/post-args'
+import { Category, Post, User, Vote } from '../../entities'
+import { CreatePostInput, EditPostInput, VoteInput } from '../../inputs'
+import { isAuth } from '../../lib/isAuth'
+import { PostMutationResponse, VoteMutationResponse } from '../../responses'
+import { ContextType } from '../../types'
 
 @Resolver(() => Post)
 export default class PostMutationResolver {
@@ -22,7 +15,7 @@ export default class PostMutationResolver {
     { title, text, image, link, categoryId, imageH, imageW }: CreatePostInput,
     @Ctx() { em, req }: ContextType,
   ): Promise<PostMutationResponse> {
-    const category = await em.findOne(Category, { id: categoryId });
+    const category = await em.findOne(Category, { id: categoryId })
     if (!category) {
       return {
         errors: [
@@ -31,7 +24,7 @@ export default class PostMutationResolver {
             message: 'there was an error finding that category',
           },
         ],
-      };
+      }
     }
     const post = em.create(Post, {
       createdAt: new Date(),
@@ -44,9 +37,9 @@ export default class PostMutationResolver {
       link,
       author: em.getReference(User, req.session.userId),
       category: em.getReference(Category, category.id),
-    });
-    await em.persistAndFlush(post);
-    return { post };
+    })
+    await em.persistAndFlush(post)
+    return { post }
   }
 
   @Mutation(() => PostMutationResponse)
@@ -57,37 +50,37 @@ export default class PostMutationResolver {
     @Ctx() { em }: ContextType,
   ): Promise<PostMutationResponse> {
     // #TODO optimize this later
-    const errors = [];
-    const post = await em.findOneOrFail(Post, { id: postId });
+    const errors = []
+    const post = await em.findOneOrFail(Post, { id: postId })
     if (post) {
       if (categoryId) {
-        post.category = em.getReference(Category, categoryId);
+        post.category = em.getReference(Category, categoryId)
       }
       if (title) {
-        post.title = title;
+        post.title = title
       }
       if (text) {
-        post.text = text;
+        post.text = text
       }
       if (image) {
-        post.image = image;
+        post.image = image
       }
       if (link) {
-        post.link = link;
+        post.link = link
       }
-      await em.flush();
+      await em.flush()
 
       return {
         post,
-      };
+      }
     }
     errors.push({
       field: 'title',
       message: 'post not found',
-    });
+    })
     return {
       errors,
-    };
+    }
   }
 
   @Mutation(() => PostMutationResponse)
@@ -102,21 +95,21 @@ export default class PostMutationResolver {
       {
         populate: ['comments', 'votes'],
       },
-    );
+    )
     if (post && post.author.id === req.session.userId) {
       if (post?.comments) {
-        post.comments.removeAll();
+        post.comments.removeAll()
         if (post.votes) {
-          post.votes.removeAll();
+          post.votes.removeAll()
         }
-        em.removeAndFlush(post);
+        em.removeAndFlush(post)
         return {
           post,
-        };
+        }
       }
-      return false;
+      return false
     }
-    return false;
+    return false
   }
 
   @Mutation(() => VoteMutationResponse)
@@ -127,46 +120,48 @@ export default class PostMutationResolver {
   ): Promise<VoteMutationResponse | null> {
     const post = await em.findOne(Post, postId, {
       populate: ['votes'],
-    });
-    if (post && req.session.userId) {
-      const didVote = await em.findOne(Vote, {
-        castBy: req.session.userId,
-        post: postId,
-      });
-      if (didVote && didVote.value === value) {
-        post.votes.remove(didVote);
-        await em.persistAndFlush(post);
-        return {
-          vote: didVote,
-          post,
-        };
-      }
-      if (didVote && didVote.value !== value) {
-        didVote.value = value;
-        await em.persistAndFlush(didVote);
-        await em.persistAndFlush(post);
-        return {
-          vote: didVote,
-          post,
-        };
-      }
-
-      const vote = em.create(Vote, {
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        post,
-        value,
-        castBy: em.getReference(User, req.session.userId),
-      });
-      post.votes.add(vote);
-
-      await em.persistAndFlush(post);
-
-      return {
-        vote,
-        post,
-      };
+    })
+    if (!post) {
+      return null
     }
-    return null;
+    const didVote = await em.findOne(Vote, {
+      castBy: req.session.userId,
+      post: postId,
+    })
+
+    if (didVote && didVote.value === value) {
+      post.votes.remove(didVote)
+      await em.persistAndFlush(post)
+      return {
+        vote: didVote,
+        post,
+      }
+    }
+
+    if (didVote && didVote.value !== value) {
+      didVote.value = value
+      await em.persistAndFlush(didVote)
+      await em.persistAndFlush(post)
+      return {
+        vote: didVote,
+        post,
+      }
+    }
+
+    const vote = em.create(Vote, {
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      post,
+      value,
+      castBy: em.getReference(User, req.session.userId),
+    })
+    post.votes.add(vote)
+
+    await em.persistAndFlush(post)
+
+    return {
+      vote,
+      post,
+    }
   }
 }

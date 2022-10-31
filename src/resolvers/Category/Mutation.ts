@@ -16,20 +16,20 @@ export default class CategoryMutationResolver {
     @Arg('data') data: CategoryInput,
     @Ctx() { em }: ContextType,
   ): Promise<CategoryMutationResponse> {
-    const isNameInUse = await em.findOne(Category, { name: data.name })
-    if (!isNameInUse) {
-      const category = em.create(Category, {
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        name: data.name,
-      })
-      await em.persistAndFlush(category)
+    const nameInUse = await em.findOne(Category, { name: data.name })
+    if (nameInUse) {
+      return {
+        errors: [categoryNameInUse],
+      }
+    }
+    const category = em.create(Category, {
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      name: data.name,
+    })
+    await em.persistAndFlush(category)
 
-      return { category }
-    }
-    return {
-      errors: [categoryNameInUse],
-    }
+    return { category }
   }
 
   @Mutation(() => UserLeaveJoinSubResponse)
@@ -43,11 +43,17 @@ export default class CategoryMutationResolver {
       { id: req.session.userId },
       { populate: ['chatRooms'], strategy: LoadStrategy.JOINED },
     )
+    if (!user) {
+      return null
+    }
     const category = await em.findOne(
       Category,
       { name: data.name },
       { populate: ['chatUsers'], strategy: LoadStrategy.JOINED },
     )
+    if (!category) {
+      return null
+    }
 
     if (category && user && category.chatUsers.contains(user)) {
       return null

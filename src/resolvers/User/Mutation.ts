@@ -40,6 +40,9 @@ export default class UserMutationResolver {
   ): Promise<boolean> {
     const user = await em.findOne(User, { email })
 
+    if (!user) {
+      return false
+    }
     if (user) {
       const token = v4()
 
