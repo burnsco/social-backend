@@ -207,6 +207,9 @@ export default class UserMutationResolver {
     }
   }
 
+  // todo make the friend requests more detailed
+  // todo show your requests (pending, etc) and others
+
   @Mutation(() => AddUserMutationResponse)
   @UseMiddleware(isAuth)
   async addFriend(
@@ -214,16 +217,30 @@ export default class UserMutationResolver {
     @Ctx() { em, req }: ContextType,
   ): Promise<AddUserMutationResponse> {
     const userAccepted = data.accept
+
     const me = await em.findOne(
       User,
       { id: req.session.userId },
-      { populate: ['friends'], strategy: LoadStrategy.JOINED },
+      {
+        populate: ['friends', 'friendRequests'],
+        strategy: LoadStrategy.JOINED,
+      },
     )
+
     const friend = await em.findOne(
       User,
       { username: data.username },
-      { populate: ['friends'], strategy: LoadStrategy.JOINED },
+      {
+        populate: ['friends', 'friendRequests'],
+        strategy: LoadStrategy.JOINED,
+      },
     )
+    // if user does not accept request, remove from friend requests
+    if (me && !userAccepted && friend && me.friends.contains(friend)) {
+      me.friendRequests.remove(friend)
+    }
+
+    // if you somehow already added this person
     if (me && friend && me.friends.contains(friend)) {
       return {
         errors: [
@@ -234,6 +251,7 @@ export default class UserMutationResolver {
         ],
       }
     }
+    //  if you are trying to add yourself somehow
     if (friend === me) {
       return {
         errors: [{ field: 'username', message: 'Cannot add yourself' }],
@@ -245,7 +263,9 @@ export default class UserMutationResolver {
       }
     }
     if (me && friend && userAccepted) {
+      me.friendRequests.remove(friend)
       me.friends.add(friend)
+      friend.friendRequests.remove(me)
       friend.friends.add(me)
     }
     await em.flush()

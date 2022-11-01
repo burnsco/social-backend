@@ -17,7 +17,7 @@ export default class MessageQueryResolver {
         { category: categoryId },
         {
           orderBy: {
-            createdAt: QueryOrder.DESC,
+            createdAt: QueryOrder.ASC,
           },
         },
       )
