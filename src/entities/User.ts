@@ -51,6 +51,10 @@ export default class User {
   @ManyToMany(() => User)
   friends = new Collection<User>(this)
 
+  @Field(() => [User])
+  @ManyToMany(() => User)
+  friendRequests = new Collection<User>(this)
+
   @Field(() => [PrivateMessage])
   @ManyToMany(() => PrivateMessage)
   privateMessages = new Collection<PrivateMessage>(this)

@@ -1,8 +1,10 @@
 import { Field, InputType } from 'type-graphql'
-import type { User } from '../entities'
 
 @InputType()
-export default class AddUserInput implements Partial<User> {
+export default class AcceptOrRejectFriendInput {
   @Field(() => String)
   username: string
+
+  @Field(() => Boolean)
+  accept: boolean
 }

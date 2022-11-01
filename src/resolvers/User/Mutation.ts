@@ -22,7 +22,8 @@ import {
 import { Topic } from '../../common/topics'
 import { User } from '../../entities'
 import { EditUserInput, LoginInput, RegisterInput } from '../../inputs'
-import AddUserInput from '../../inputs/add-user-input'
+import AcceptOrRejectFriendInput from '../../inputs/acc-or-rej-friend'
+import AddFriendRequestInput from '../../inputs/add-friend-request'
 import { isAuth } from '../../lib/isAuth'
 import {
   UserLogoutMutationResponse,
@@ -209,9 +210,10 @@ export default class UserMutationResolver {
   @Mutation(() => AddUserMutationResponse)
   @UseMiddleware(isAuth)
   async addFriend(
-    @Arg('data') data: AddUserInput,
+    @Arg('data') data: AcceptOrRejectFriendInput,
     @Ctx() { em, req }: ContextType,
   ): Promise<AddUserMutationResponse> {
+    const userAccepted = data.accept
     const me = await em.findOne(
       User,
       { id: req.session.userId },
@@ -242,9 +244,62 @@ export default class UserMutationResolver {
         errors: [{ field: 'username', message: 'User Not Found' }],
       }
     }
-    if (me && friend) {
+    if (me && friend && userAccepted) {
       me.friends.add(friend)
       friend.friends.add(me)
+    }
+    await em.flush()
+    return {
+      friend,
+      me,
+    }
+  }
+
+  @Mutation(() => AddUserMutationResponse)
+  @UseMiddleware(isAuth)
+  async addFriendRequest(
+    @Arg('data') data: AddFriendRequestInput,
+    @Ctx() { em, req }: ContextType,
+  ): Promise<AddUserMutationResponse> {
+    const me = await em.findOne(
+      User,
+      { id: req.session.userId },
+      {
+        populate: ['friends', 'friendRequests'],
+        strategy: LoadStrategy.JOINED,
+      },
+    )
+    const friend = await em.findOne(
+      User,
+      { username: data.username },
+      {
+        populate: ['friends', 'friendRequests'],
+        strategy: LoadStrategy.JOINED,
+      },
+    )
+    if (me && friend && me.friends.contains(friend)) {
+      return {
+        errors: [
+          {
+            field: 'username',
+            message: `${friend.username} is already a friend`,
+          },
+        ],
+      }
+    }
+    if (friend === me) {
+      return {
+        errors: [{ field: 'username', message: 'Cannot add yourself' }],
+      }
+    }
+    if (!friend || !me) {
+      return {
+        errors: [{ field: 'username', message: 'User Not Found' }],
+      }
+    }
+    if (me && friend) {
+      me.friendRequests.add(friend)
+      friend.friendRequests.add(me)
     }
     await em.flush()
     return {

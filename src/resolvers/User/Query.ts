@@ -29,7 +29,7 @@ export default class UserQueryResolver {
         User,
         { id: req.session.userId },
         {
-          populate: ['friends', 'privateMessages'],
+          populate: ['friends', 'privateMessages', 'friendRequests'],
         },
       )
     }
@@ -44,6 +44,11 @@ export default class UserQueryResolver {
   @FieldResolver({ nullable: true })
   async chatRooms(@Root() user: User) {
     return user.chatRooms
+  }
+
+  @FieldResolver({ nullable: true })
+  async friendRequests(@Root() user: User) {
+    return user.friendRequests
   }
 
   @FieldResolver({ nullable: true })
