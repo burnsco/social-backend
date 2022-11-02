@@ -12,6 +12,7 @@ import { WebSocketServer } from 'ws'
 import { initializeDB, initializeExpress, initializeRedis } from './config'
 import User from './entities/User'
 import { resolversArray } from './resolvers/resolvers'
+import { DatabaseSeeder } from './seeders/DatabaseSeeder'
 
 // todo fix the user connection so it goes online/offline properly
 // todo make it easier to test on apollo studio (user cookie? token? )
@@ -21,6 +22,8 @@ async function main(): Promise<void> {
   const { orm } = await initializeDB()
   const { app } = initializeExpress()
   const { redisClient, pubSub } = initializeRedis()
+
+  await DatabaseSeeder()
 
   const schema = await buildSchema({
     resolvers: resolversArray,

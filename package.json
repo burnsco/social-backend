@@ -85,7 +85,7 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@apollo/server": "^4.0.5",
+    "@apollo/server": "^4.1.0",
     "@mikro-orm/cli": "^5.5.0",
     "@mikro-orm/core": "^5.5.0",
     "@mikro-orm/migrations": "^5.5.0",
@@ -103,7 +103,7 @@
     "graphql-redis-subscriptions": "^2.5.0",
     "graphql-subscriptions": "^2.0.0",
     "graphql-ws": "^5.11.2",
-    "ioredis": "^5.2.3",
+    "ioredis": "^5.2.4",
     "moment": "^2.29.4",
     "nodemailer": "^6.8.0",
     "pg": "^8.8.0",

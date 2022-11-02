@@ -11,6 +11,8 @@ const categories = [
   'business',
   'cats',
   'city',
+  'nightlife',
+  'outdoors',
   'fashion',
   'food',
   'nature',
@@ -19,9 +21,17 @@ const categories = [
   'sports',
   'technics',
   'transport',
+  'books',
+  'living',
+  'cars',
+  'gaming',
+  'buildapc',
+  'development',
+  'learning',
+  'clothing',
 ]
 
-const numbPosts = 50
+const numbPosts = 100
 const imageHeight = 1650
 const imageW = 1080
 
