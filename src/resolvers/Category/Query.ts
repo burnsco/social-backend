@@ -1,7 +1,7 @@
 import { QueryOrder } from '@mikro-orm/core'
 import { Args, Ctx, FieldResolver, Query, Resolver, Root } from 'type-graphql'
 import CategoryArgs from '../../args/category-args'
-import NewMessageArgs from '../../args/message-args'
+import CategoryArgsTest from '../../args/categoryArgs'
 import { Category, User } from '../../entities'
 import { ContextType } from '../../types'
 
@@ -9,16 +9,21 @@ import { ContextType } from '../../types'
 export default class CategoryQueryResolver {
   @Query(() => Category, { nullable: true })
   async category(
-    @Args() { categoryId }: NewMessageArgs,
+    @Args() { categoryId, name }: CategoryArgsTest,
     @Ctx() { em }: ContextType,
   ): Promise<Category | null> {
-    const category = await em.findOne(Category, categoryId, {
-      populate: ['chatUsers'],
-    })
-    if (!category) {
-      return null
+    let category
+    if (categoryId) {
+      category = await em.findOne(Category, categoryId, {
+        populate: ['chatUsers'],
+      })
+      return category
     }
-    return category
+    if (name) {
+      category = await em.findOne(Category, { name })
+      return category
+    }
+    return null
   }
 
   @Query(() => [Category], { nullable: true })
