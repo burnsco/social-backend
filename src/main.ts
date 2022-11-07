@@ -1,6 +1,10 @@
 import { ApolloServer } from '@apollo/server'
 import { expressMiddleware } from '@apollo/server/express4'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
+import {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault,
+} from '@apollo/server/plugin/landingPage/default'
 import { json } from 'body-parser'
 import cors from 'cors'
 import 'dotenv-safe/config'
@@ -78,6 +82,16 @@ async function main(): Promise<void> {
   const apolloServer = new ApolloServer({
     schema,
     plugins: [
+      // Install a landing page plugin based on NODE_ENV
+      process.env.NODE_ENV === 'production'
+        ? ApolloServerPluginLandingPageProductionDefault({
+            graphRef: 'My-Graph-2-g83uir@current',
+            footer: false,
+          })
+        : ApolloServerPluginLandingPageLocalDefault({
+            footer: false,
+            includeCookies: true,
+          }),
       ApolloServerPluginDrainHttpServer({ httpServer }),
       {
         async serverWillStart() {
@@ -97,12 +111,12 @@ async function main(): Promise<void> {
     cors({
       credentials: true,
       origin: [
-        'https://studio.apollographql.com',
         'http://localhost:3000',
         'http://localhost:3002',
+        'http://social.coreyburns.dev',
         'https://social.coreyburns.dev',
         'http://social.coreyburns.dev:3000',
-        'http://143.198.37.31:3002',
+        'https://social.coreyburns.dev:3000',
       ],
     }),
     json(),

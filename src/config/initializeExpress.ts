@@ -17,12 +17,10 @@ export default function initializeExpress() {
   app.use(
     cors({
       origin: [
-        'https://studio.apollographql.com',
         'http://localhost:3000',
         'http://localhost:3002',
         'https://social.coreyburns.dev',
         'https://social.coreyburns.dev:3000',
-        'http://143.198.37.31:3002',
       ],
       credentials: true,
     }),
