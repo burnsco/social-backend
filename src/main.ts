@@ -17,10 +17,6 @@ import { initializeDB, initializeExpress, initializeRedis } from './config'
 import User from './entities/User'
 import { resolversArray } from './resolvers/resolvers'
 
-// todo fix the user connection so it goes online/offline properly
-// todo make it easier to test on apollo studio (user cookie? token? )
-// todo possible make it so that everything is a sub, or more things at least
-
 async function main(): Promise<void> {
   const { orm } = await initializeDB()
   const { app } = initializeExpress()
@@ -81,11 +77,12 @@ async function main(): Promise<void> {
 
   const apolloServer = new ApolloServer({
     schema,
+    apollo: { key: process.env.APOLLO_KEY },
     plugins: [
       // Install a landing page plugin based on NODE_ENV
       process.env.NODE_ENV === 'production'
         ? ApolloServerPluginLandingPageProductionDefault({
-            graphRef: 'My-Graph-2-g83uir@current',
+            graphRef: process.env.APOLLO_GRAPH_REF,
             footer: false,
           })
         : ApolloServerPluginLandingPageLocalDefault({
