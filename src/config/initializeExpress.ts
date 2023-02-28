@@ -28,9 +28,7 @@ export default function initializeExpress() {
   app.use(
     session({
       name: COOKIE_NAME,
-      store: new redisStore({
-        client: redisClient,
-      }),
+      store: redisStore,
       cookie: {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
