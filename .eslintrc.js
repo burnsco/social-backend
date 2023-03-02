@@ -5,9 +5,12 @@ module.exports = {
     es2022: true,
     node: true,
   },
-  plugins: ['@typescript-eslint', '@typescript-eslint',
+  plugins: [
+    '@typescript-eslint',
+    '@typescript-eslint',
     '@typescript-eslint/eslint-plugin',
-    'prettier',],
+    'prettier',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
@@ -157,7 +160,6 @@ module.exports = {
       'always',
       { exceptAfterSingleLine: true },
     ],
-    'padded-blocks': ['error', { classes: 'always' }],
     'no-else-return': 'error',
     'block-spacing': ['error', 'always'],
     'space-before-blocks': ['error', 'always'],
@@ -166,4 +168,4 @@ module.exports = {
     'space-in-parens': ['error', 'never'],
   },
   settings: {},
-};
+}
