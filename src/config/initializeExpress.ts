@@ -17,6 +17,8 @@ export default function initializeExpress() {
   app.use(
     cors({
       origin: [
+        'https://studio.apollographql.com',
+        'https://sandbox.embed.apollographql.com',
         'http://localhost:3000',
         'http://localhost:3002',
         'https://social.coreyburns.dev',

@@ -59,7 +59,9 @@ export default class MessageMutationResolver {
       console.log(payload)
       console.log('args')
       console.log(args)
-      const isMatch = payload.category.id === args.categoryId
+      const isMatch = payload.category.name === args.categoryId
+      console.log(`payload.category.id = ${payload.category.id}`)
+      console.log(`args.categoryId = ${args.categoryId}`)
       console.log('ismatching')
       console.log(isMatch)
       return isMatch
