@@ -54,17 +54,14 @@ export default class MessageMutationResolver {
   @Subscription(() => Message, {
     topics: Topic.NewMessage,
     filter: ({ payload, args }) => {
-      const isMatch = payload.category.id === args.categoryId
-
+      const isMatch = payload.category.name === args.categoryName
       return isMatch
     },
   })
   newMessage(
     @Root() newMessage: Message,
-    @Args() { categoryId }: NewMessageArgs,
+    @Args() { categoryName }: NewMessageArgs,
   ): Message {
-    console.log('new message')
-    console.log(newMessage)
     return newMessage
   }
 }

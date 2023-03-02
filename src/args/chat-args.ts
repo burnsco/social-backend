@@ -1,7 +1,7 @@
-import { ArgsType, Field, ID } from 'type-graphql';
+import { ArgsType, Field } from 'type-graphql'
 
 @ArgsType()
 export default class ChatRoomArgsForQuery {
-  @Field(() => ID)
-  categoryId: string;
+  @Field(() => String)
+  categoryName: string
 }

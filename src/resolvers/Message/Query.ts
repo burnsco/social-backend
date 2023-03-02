@@ -8,24 +8,21 @@ import { ContextType } from '../../types'
 export default class MessageQueryResolver {
   @Query(() => [Message], { nullable: true })
   async messages(
-    @Args() { categoryId }: ChatRoomArgsForQuery,
+    @Args() { categoryName }: ChatRoomArgsForQuery,
     @Ctx() { em }: ContextType,
   ): Promise<Message[] | null> {
     try {
       const messages = await em.find(
         Message,
-        { category: categoryId },
+        { category: { name: categoryName } },
         {
           orderBy: {
             createdAt: QueryOrder.ASC,
           },
         },
       )
-      console.log('messages')
-      console.log(messages)
       return messages
     } catch (error) {
-      console.log('error finding messages')
       console.log(error)
       return null
     }

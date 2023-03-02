@@ -7,5 +7,5 @@ export default class MessageInput implements Partial<Message> {
   content: string
 
   @Field()
-  categoryName?: string
+  categoryName: string
 }
