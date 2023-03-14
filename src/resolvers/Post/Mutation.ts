@@ -1,5 +1,17 @@
-import { Arg, Args, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql'
+import {
+  Arg,
+  Args,
+  Ctx,
+  Mutation,
+  PubSub,
+  Publisher,
+  Resolver,
+  Root,
+  Subscription,
+  UseMiddleware,
+} from 'type-graphql'
 import PostArgs from '../../args/post-args'
+import { Topic } from '../../common/topics'
 import { Category, Post, User, Vote } from '../../entities'
 import { CreatePostInput, EditPostInput, VoteInput } from '../../inputs'
 import { isAuth } from '../../lib/isAuth'
@@ -13,6 +25,8 @@ export default class PostMutationResolver {
   async createPost(
     @Arg('data')
     { title, text, image, link, categoryId, imageH, imageW }: CreatePostInput,
+    @PubSub(Topic.NewPost)
+    notifyAboutNewPost: Publisher<Post>,
     @Ctx() { em, req }: ContextType,
   ): Promise<PostMutationResponse> {
     const category = await em.findOne(Category, { id: categoryId })
@@ -39,6 +53,7 @@ export default class PostMutationResolver {
       category: em.getReference(Category, category.id),
     })
     await em.persistAndFlush(post)
+    await notifyAboutNewPost(post)
     return { post }
   }
 
@@ -163,5 +178,14 @@ export default class PostMutationResolver {
       vote,
       post,
     }
+  }
+
+  // *** SUBSCRIPTION *** \\
+
+  @Subscription(() => Post, {
+    topics: Topic.NewPost,
+  })
+  newPost(@Root() newPost: Post): Post {
+    return newPost
   }
 }

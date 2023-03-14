@@ -96,14 +96,13 @@ export default class CommentMutationResolver {
   }
 
   // *** SUBSCRIPTION *** \\
-
   @Subscription(() => Comment, {
     topics: Topic.NewComment,
     filter: ({ payload, args }) => {
       return payload.post === args.postId
     },
   })
-  newMessage(
+  newComment(
     @Root() newComment: Comment,
     @Args() { postId }: NewCommentsArgs,
   ): Comment {

@@ -1,7 +1,7 @@
-import { ArgsType, Field, Int } from 'type-graphql'
+import { ArgsType, Field, ID } from 'type-graphql'
 
 @ArgsType()
 export default class NewCommentsArgs {
-  @Field(() => Int)
-  postId: number
+  @Field(() => ID)
+  postId: string
 }
