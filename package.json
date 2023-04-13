@@ -110,7 +110,7 @@
     "type-graphql": "^2.0.0-beta.1",
     "uuid": "^9.0.0",
     "ws": "^8.13.0",
-    "yup": "^1.0.2"
+    "yup": "^1.1.0"
   },
   "mikro-orm": {
     "useTsNode": true,
