@@ -5,12 +5,9 @@ module.exports = {
     es2022: true,
     node: true,
   },
-  plugins: [
-    '@typescript-eslint',
-    '@typescript-eslint',
+  plugins: ['@typescript-eslint', '@typescript-eslint',
     '@typescript-eslint/eslint-plugin',
-    'prettier',
-  ],
+    'prettier',],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
@@ -25,22 +22,12 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/consistent-type-imports': 'error',
-    '@typescript-eslint/no-duplicate-imports': 'error',
     '@typescript-eslint/prefer-optional-chain': 'error',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/naming-convention': [
-      'error',
-      { selector: 'default', format: null },
-      {
-        selector: 'variable',
-        format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
-      },
-      { selector: 'typeLike', format: ['PascalCase'] },
-    ],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/adjacent-overload-signatures': 'error',
@@ -160,6 +147,7 @@ module.exports = {
       'always',
       { exceptAfterSingleLine: true },
     ],
+    'padded-blocks': ['error', { classes: 'always' }],
     'no-else-return': 'error',
     'block-spacing': ['error', 'always'],
     'space-before-blocks': ['error', 'always'],
@@ -168,4 +156,4 @@ module.exports = {
     'space-in-parens': ['error', 'never'],
   },
   settings: {},
-}
+};
