@@ -4,9 +4,16 @@ import CategoryArgs from '../../args/category-args'
 import CategoryArgsTest from '../../args/categoryArgs'
 import { Category, User } from '../../entities'
 import { ContextType } from '../../types'
+import { _QueryMeta } from './../../common/_QueryMeta'
 
 @Resolver(() => Category)
 export default class CategoryQueryResolver {
+  @Query(() => _QueryMeta)
+  async numberOfCategories(@Root() @Ctx() { em }: ContextType) {
+    const [, count] = await em.findAndCount(Category, {})
+    return { count }
+  }
+
   @Query(() => Category, { nullable: true })
   async category(
     @Args() { categoryId, name }: CategoryArgsTest,
@@ -48,6 +55,11 @@ export default class CategoryQueryResolver {
       }
       return categories
     }
+
+    // TODO create a way to get # of cat for navbar
+    // if (count) {
+    //   return numberOfCategories
+    // }
 
     const [categories] = await em.findAndCount(
       Category,
