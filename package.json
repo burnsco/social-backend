@@ -84,7 +84,7 @@
     "typescript": "^5.1.3"
   },
   "dependencies": {
-    "@apollo/server": "^4.7.3",
+    "@apollo/server": "^4.7.4",
     "@mikro-orm/cli": "^5.7.12",
     "@mikro-orm/core": "^5.7.12",
     "@mikro-orm/migrations": "^5.7.12",

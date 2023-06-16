@@ -147,7 +147,7 @@ module.exports = {
       'always',
       { exceptAfterSingleLine: true },
     ],
-    'padded-blocks': ['error', { classes: 'always' }],
+    'padded-blocks': ['error', 'never'],
     'no-else-return': 'error',
     'block-spacing': ['error', 'always'],
     'space-before-blocks': ['error', 'always'],
