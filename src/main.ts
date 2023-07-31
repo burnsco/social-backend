@@ -5,9 +5,9 @@ import {
   ApolloServerPluginLandingPageLocalDefault,
   ApolloServerPluginLandingPageProductionDefault,
 } from '@apollo/server/plugin/landingPage/default'
-import { json } from 'body-parser'
 import cors from 'cors'
 import 'dotenv-safe/config'
+import { json } from 'express'
 import { useServer } from 'graphql-ws/lib/use/ws'
 import { createServer } from 'http'
 import 'reflect-metadata'
