@@ -60,7 +60,7 @@
     "@types/express-session": "^1.17.7",
     "@types/ioredis": "^4.28.10",
     "@types/jest": "^29.5.3",
-    "@types/node": "^20.4.8",
+    "@types/node": "^20.4.9",
     "@types/nodemailer": "^6.4.9",
     "@types/uuid": "^9.0.2",
     "@types/ws": "^8.5.5",
