@@ -10,13 +10,13 @@ dependencies:
     version: 4.9.1(graphql@16.8.0)
   '@mikro-orm/cli':
     specifier: ^5.7.14
-    version: 5.7.14(@mikro-orm/migrations@5.7.14)(@mikro-orm/postgresql@5.7.14)(@mikro-orm/seeder@5.7.14)(pg@8.11.2)
+    version: 5.7.14(@mikro-orm/migrations@5.7.14)(@mikro-orm/postgresql@5.7.14)(@mikro-orm/seeder@5.7.14)(pg@8.11.3)
   '@mikro-orm/core':
     specifier: ^5.7.14
     version: 5.7.14(@mikro-orm/migrations@5.7.14)(@mikro-orm/postgresql@5.7.14)(@mikro-orm/seeder@5.7.14)
   '@mikro-orm/migrations':
     specifier: ^5.7.14
-    version: 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.2)
+    version: 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.3)
   '@mikro-orm/postgresql':
     specifier: ^5.7.14
     version: 5.7.14(@mikro-orm/core@5.7.14)(@mikro-orm/migrations@5.7.14)(@mikro-orm/seeder@5.7.14)
@@ -69,8 +69,8 @@ dependencies:
     specifier: ^6.9.4
     version: 6.9.4
   pg:
-    specifier: ^8.11.2
-    version: 8.11.2
+    specifier: ^8.11.3
+    version: 8.11.3
   reflect-metadata:
     specifier: ^0.1.13
     version: 0.1.13
@@ -1115,7 +1115,7 @@ packages:
       - supports-color
     dev: false
 
-  /@mikro-orm/cli@5.7.14(@mikro-orm/migrations@5.7.14)(@mikro-orm/postgresql@5.7.14)(@mikro-orm/seeder@5.7.14)(pg@8.11.2):
+  /@mikro-orm/cli@5.7.14(@mikro-orm/migrations@5.7.14)(@mikro-orm/postgresql@5.7.14)(@mikro-orm/seeder@5.7.14)(pg@8.11.3):
     resolution: {integrity: sha512-+Npl7TGQvJBli8rVmFpBOJ/5ivWL8Ui2YxszMAK2n2hwFXxPomk3ySccG4E9KTsvEdph4KGA08UONlNB1VIquQ==}
     engines: {node: '>= 14.0.0'}
     hasBin: true
@@ -1154,8 +1154,8 @@ packages:
     dependencies:
       '@jercle/yargonaut': 1.1.5
       '@mikro-orm/core': 5.7.14(@mikro-orm/migrations@5.7.14)(@mikro-orm/postgresql@5.7.14)(@mikro-orm/seeder@5.7.14)
-      '@mikro-orm/knex': 5.7.14(@mikro-orm/core@5.7.14)(@mikro-orm/migrations@5.7.14)(pg@8.11.2)
-      '@mikro-orm/migrations': 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.2)
+      '@mikro-orm/knex': 5.7.14(@mikro-orm/core@5.7.14)(@mikro-orm/migrations@5.7.14)(pg@8.11.3)
+      '@mikro-orm/migrations': 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.3)
       '@mikro-orm/postgresql': 5.7.14(@mikro-orm/core@5.7.14)(@mikro-orm/migrations@5.7.14)(@mikro-orm/seeder@5.7.14)
       '@mikro-orm/seeder': 5.7.14(@mikro-orm/core@5.7.14)
       fs-extra: 11.1.1
@@ -1209,7 +1209,7 @@ packages:
       '@mikro-orm/sqlite':
         optional: true
     dependencies:
-      '@mikro-orm/migrations': 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.2)
+      '@mikro-orm/migrations': 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.3)
       '@mikro-orm/postgresql': 5.7.14(@mikro-orm/core@5.7.14)(@mikro-orm/migrations@5.7.14)(@mikro-orm/seeder@5.7.14)
       '@mikro-orm/seeder': 5.7.14(@mikro-orm/core@5.7.14)
       acorn-loose: 8.3.0
@@ -1253,7 +1253,7 @@ packages:
         optional: true
     dependencies:
       '@mikro-orm/core': 5.7.14(@mikro-orm/migrations@5.7.14)(@mikro-orm/postgresql@5.7.14)(@mikro-orm/seeder@5.7.14)
-      '@mikro-orm/migrations': 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.2)
+      '@mikro-orm/migrations': 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.3)
       fs-extra: 11.1.1
       knex: 2.5.1(pg@8.11.1)
       pg: 8.11.1
@@ -1264,7 +1264,7 @@ packages:
       - tedious
     dev: false
 
-  /@mikro-orm/knex@5.7.14(@mikro-orm/core@5.7.14)(@mikro-orm/migrations@5.7.14)(pg@8.11.2):
+  /@mikro-orm/knex@5.7.14(@mikro-orm/core@5.7.14)(@mikro-orm/migrations@5.7.14)(pg@8.11.3):
     resolution: {integrity: sha512-dLw80JiOfQ6YBtKXI3j0C31lYfbWlytZUpXFM4tEKlMbAMmSbPqDgZpiF3luxBKTg3JpsnGSK0urBOxL1c/m+g==}
     engines: {node: '>= 14.0.0'}
     peerDependencies:
@@ -1296,10 +1296,10 @@ packages:
         optional: true
     dependencies:
       '@mikro-orm/core': 5.7.14(@mikro-orm/migrations@5.7.14)(@mikro-orm/postgresql@5.7.14)(@mikro-orm/seeder@5.7.14)
-      '@mikro-orm/migrations': 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.2)
+      '@mikro-orm/migrations': 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.3)
       fs-extra: 11.1.1
-      knex: 2.5.1(pg@8.11.2)
-      pg: 8.11.2
+      knex: 2.5.1(pg@8.11.3)
+      pg: 8.11.3
       sqlstring: 2.3.3
     transitivePeerDependencies:
       - pg-native
@@ -1307,16 +1307,16 @@ packages:
       - tedious
     dev: false
 
-  /@mikro-orm/migrations@5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.2):
+  /@mikro-orm/migrations@5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.3):
     resolution: {integrity: sha512-CwNcvY8Zj6Ah1Y9bA2fpgaJVX+QNXR6E9mpytRS74+grcEBRSF/cpXdrIons6e5LzPRxPFrMgghXHm4Fb1OMWg==}
     engines: {node: '>= 14.0.0'}
     peerDependencies:
       '@mikro-orm/core': ^5.0.0
     dependencies:
       '@mikro-orm/core': 5.7.14(@mikro-orm/migrations@5.7.14)(@mikro-orm/postgresql@5.7.14)(@mikro-orm/seeder@5.7.14)
-      '@mikro-orm/knex': 5.7.14(@mikro-orm/core@5.7.14)(@mikro-orm/migrations@5.7.14)(pg@8.11.2)
+      '@mikro-orm/knex': 5.7.14(@mikro-orm/core@5.7.14)(@mikro-orm/migrations@5.7.14)(pg@8.11.3)
       fs-extra: 11.1.1
-      knex: 2.5.1(pg@8.11.2)
+      knex: 2.5.1(pg@8.11.3)
       umzug: 3.2.1
     transitivePeerDependencies:
       - '@mikro-orm/entity-generator'
@@ -1349,7 +1349,7 @@ packages:
     dependencies:
       '@mikro-orm/core': 5.7.14(@mikro-orm/migrations@5.7.14)(@mikro-orm/postgresql@5.7.14)(@mikro-orm/seeder@5.7.14)
       '@mikro-orm/knex': 5.7.14(@mikro-orm/core@5.7.14)(@mikro-orm/migrations@5.7.14)(pg@8.11.1)
-      '@mikro-orm/migrations': 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.2)
+      '@mikro-orm/migrations': 5.7.14(@mikro-orm/core@5.7.14)(pg@8.11.3)
       '@mikro-orm/seeder': 5.7.14(@mikro-orm/core@5.7.14)
       pg: 8.11.1
     transitivePeerDependencies:
@@ -2195,8 +2195,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001520
-      electron-to-chromium: 1.4.491
+      caniuse-lite: 1.0.30001521
+      electron-to-chromium: 1.4.495
       node-releases: 2.0.13
       update-browserslist-db: 1.0.11(browserslist@4.21.10)
     dev: true
@@ -2249,8 +2249,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite@1.0.30001520:
-    resolution: {integrity: sha512-tahF5O9EiiTzwTUqAeFjIZbn4Dnqxzz7ktrgGlMYNLH43Ul26IgTMH/zvL3DG0lZxBYnlT04axvInszUsZULdA==}
+  /caniuse-lite@1.0.30001521:
+    resolution: {integrity: sha512-fnx1grfpEOvDGH+V17eccmNjucGUnCbP6KL+l5KqBIerp26WK/+RQ7CIDE37KGJjaPyqWXXlFUyKiWmvdNNKmQ==}
     dev: true
 
   /chalk@2.4.2:
@@ -2634,8 +2634,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: false
 
-  /electron-to-chromium@1.4.491:
-    resolution: {integrity: sha512-ZzPqGKghdVzlQJ+qpfE+r6EB321zed7e5JsvHIlMM4zPFF8okXUkF5Of7h7F3l3cltPL0rG7YVmlp5Qro7RQLA==}
+  /electron-to-chromium@1.4.495:
+    resolution: {integrity: sha512-mwknuemBZnoOCths4GtpU/SDuVMp3uQHKa2UNJT9/aVD6WVRjGpXOxRGX7lm6ILIenTdGXPSTCTDaWos5tEU8Q==}
     dev: true
 
   /emittery@0.12.1:
@@ -4379,7 +4379,7 @@ packages:
       - supports-color
     dev: false
 
-  /knex@2.5.1(pg@8.11.2):
+  /knex@2.5.1(pg@8.11.3):
     resolution: {integrity: sha512-z78DgGKUr4SE/6cm7ku+jHvFT0X97aERh/f0MUKAKgFnwCYBEW4TFBqtHWFYiJFid7fMrtpZ/gxJthvz5mEByA==}
     engines: {node: '>=12'}
     hasBin: true
@@ -4416,7 +4416,7 @@ packages:
       getopts: 2.3.0
       interpret: 2.2.0
       lodash: 4.17.21
-      pg: 8.11.2
+      pg: 8.11.3
       pg-connection-string: 2.6.1
       rechoir: 0.8.0
       resolve-from: 5.0.0
@@ -5038,12 +5038,12 @@ packages:
       pg: 8.11.1
     dev: false
 
-  /pg-pool@3.6.1(pg@8.11.2):
+  /pg-pool@3.6.1(pg@8.11.3):
     resolution: {integrity: sha512-jizsIzhkIitxCGfPRzJn1ZdcosIt3pz9Sh3V01fm1vZnbnCMgmGl5wvGGdNN2EL9Rmb0EcFoCkixH4Pu+sP9Og==}
     peerDependencies:
       pg: '>=8.0'
     dependencies:
-      pg: 8.11.2
+      pg: 8.11.3
     dev: false
 
   /pg-protocol@1.6.0:
@@ -5081,8 +5081,8 @@ packages:
       pg-cloudflare: 1.1.1
     dev: false
 
-  /pg@8.11.2:
-    resolution: {integrity: sha512-l4rmVeV8qTIrrPrIR3kZQqBgSN93331s9i6wiUiLOSk0Q7PmUxZD/m1rQI622l3NfqBby9Ar5PABfS/SulfieQ==}
+  /pg@8.11.3:
+    resolution: {integrity: sha512-+9iuvG8QfaaUrrph+kpF24cXkH1YOOUeArRNYIxq1viYHZagBxrTno7cecY1Fa44tJeZvaoG+Djpkc3JwehN5g==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
       pg-native: '>=3.0.1'
@@ -5093,7 +5093,7 @@ packages:
       buffer-writer: 2.0.0
       packet-reader: 1.0.0
       pg-connection-string: 2.6.2
-      pg-pool: 3.6.1(pg@8.11.2)
+      pg-pool: 3.6.1(pg@8.11.3)
       pg-protocol: 1.6.0
       pg-types: 2.2.0
       pgpass: 1.0.5
