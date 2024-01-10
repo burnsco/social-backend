@@ -77,12 +77,10 @@ async function main(): Promise<void> {
 
   const apolloServer = new ApolloServer({
     schema,
-    apollo: { key: process.env.APOLLO_KEY },
     plugins: [
       // Install a landing page plugin based on NODE_ENV
       process.env.NODE_ENV === 'production'
         ? ApolloServerPluginLandingPageProductionDefault({
-            graphRef: process.env.APOLLO_GRAPH_REF,
             footer: false,
           })
         : ApolloServerPluginLandingPageLocalDefault({

@@ -10,8 +10,6 @@ declare global {
       REDIS_URL: string
       REDIS_HOST: string
       REDIS_PORT: string
-      APOLLO_KEY: string
-      APOLLO_GRAPH_REF: string
       SESSION_SECRET: string
       ADMIN_EMAIL: string
       ADMIN_PASS: string
