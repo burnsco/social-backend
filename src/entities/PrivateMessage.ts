@@ -29,7 +29,7 @@ export default class PrivateMessage {
   body!: string
 
   @Field(() => User)
-  @ManyToOne(() => User, { onDelete: 'cascade' })
+  @ManyToOne(() => User)
   sentBy!: User
 
   @Field(() => User)

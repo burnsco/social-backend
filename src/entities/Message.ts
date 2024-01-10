@@ -23,14 +23,10 @@ export default class Message {
   content!: string
 
   @Field(() => User)
-  @ManyToOne(() => User, {
-    onDelete: 'cascade',
-  })
+  @ManyToOne(() => User)
   sentBy!: User
 
   @Field(() => Category)
-  @ManyToOne(() => Category, {
-    onDelete: 'cascade',
-  })
+  @ManyToOne(() => Category)
   category!: Category
 }

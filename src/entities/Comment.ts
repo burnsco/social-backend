@@ -29,7 +29,7 @@ export default class Comment {
   body!: string
 
   @Field(() => User)
-  @ManyToOne(() => User, { onDelete: 'cascade' })
+  @ManyToOne(() => User)
   createdBy!: User
 
   @Field(() => Post)

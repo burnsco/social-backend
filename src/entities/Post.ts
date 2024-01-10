@@ -52,13 +52,11 @@ export default class Post {
   imageW?: number
 
   @Field(() => User)
-  @ManyToOne(() => User, { onDelete: 'cascade' })
+  @ManyToOne(() => User)
   author!: User
 
   @Field(() => Category)
-  @ManyToOne(() => Category, {
-    onDelete: 'cascade',
-  })
+  @ManyToOne(() => Category)
   category!: Category
 
   @Field(() => [Vote], { nullable: true })
