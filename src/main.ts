@@ -27,6 +27,7 @@ async function main(): Promise<void> {
     validate: false,
     pubSub,
   })
+
   const httpServer = createServer(app)
   const wsServer = new WebSocketServer({
     server: httpServer,
